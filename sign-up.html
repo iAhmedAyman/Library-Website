@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up Form</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class = "Sign-up">
+        <form action="">
+
+            <h1>Sign up</h1>
+            <!--Username-->
+            <div class="input-box">
+                <label for="username">Username</label>
+                <input  type="text" placeholder="Your Username"
+                required>
+                
+            </div>
+            <!--Email-->
+            <div class="input-box">
+                <label for="email">Email</label>
+                <input  type="text" placeholder="Your Email"
+                required>
+                
+            </div>
+            <!--Password-->
+            <div class="input-box">
+                <label for="password">Password</label>
+                <input  type="password" placeholder="Your Password"
+                required>
+                
+            </div>
+            <!--Confirm Password-->
+            <div class="input-box">
+                <label for="confirm">Confirm password</label>
+                <input  type="password" placeholder="Confirm Your Password"
+                required>
+                
+            </div>
+            <!--User/Admin-->
+            <div class="role">
+                <label>
+                    <input type="radio" name="role" value="user" required>
+                    User
+                </label>
+                <label>
+                    <input type="radio" name="role" value="admin">
+                    Admin
+                </label>
+                
+            </div>
+            <!--Login-->
+            <button type="submit" class="btn"> Sign up</button>
+            <!--Sign in-->
+            <div class="register-link">
+                <p>Already have an account? <a href="#"> Sign in</a> </p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
