@@ -6,6 +6,10 @@ body {
     color: #192252;
 }
 
+button, a {
+    cursor: pointer;
+}
+
 .horizontal-center {
     display: flex;
     flex-direction: column;
@@ -31,6 +35,10 @@ body {
 .vertical-flex {
     display: flex;
     flex-direction: column;
+}
+
+.space-between {
+    justify-content: space-between;
 }
 
 /* ----------Navigation Bar---------- */
@@ -115,6 +123,7 @@ a {
 
 .main-panel {
     min-height: 60vh;
+    min-width: 45rem;
     padding: 5%;
     background-color: #fafafa;
     border-radius: 0.3rem;
@@ -140,8 +149,49 @@ a {
 
 /* ----------Cover Preview---------- */
 #cover-preview {
-    width: 50%;
+    min-width: 20rem;
+    position: relative;
 }
+
+#cover-preview img {
+    max-height: 20rem;
+}
+/* ----------------------------- */
+
+/* ----------Edit Book---------- */
+.edit-info {
+    position: relative;
+    display: inline-block;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.edit-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.301);
+    border: solid 1px black;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.edit-overlay i {
+    font-size: 400%;
+    color: #192252;
+}
+
+.edit-overlay:hover {
+    opacity: 1;
+    z-index: 10;
+}
+
 /* ----------------------------- */
 
 /* ----------Name and Title---------- */
@@ -172,8 +222,9 @@ a {
 }
 /* ----------------------------- */
 
+/* ----------Blue Buttons---------- */
 .blue-button {
-    width: 8rem;
+    width: 5rem;
     height: 2rem;
     background-color: #465fe9;
     border-color: #465fe9;
@@ -189,3 +240,16 @@ a {
 .blue-button:active {
     background-color: #384cba;
 }
+/* ----------------------------- */
+
+/* ----------Flag and Category---------- */
+.flag-categ > :first-child {
+    display: inline-block;
+    background-color: #198754;
+    border-radius: 50px;
+    color: white;
+    text-align: center;
+    padding: 0.3rem;
+}
+/* ----------------------------- */
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Preview</title>
+    <title>Book Edit</title>
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"> <!--Font-->
@@ -35,21 +35,36 @@
                     <!-- Left Side: Book Details -->
                     <td>
                         <div class="horizontal-flex space-between">
-                            <div class="name-title">
+                            <!--Editable Title and Author Name-->
+                            <div class="name-title edit-info">
                                 <h1>Title</h1>
                                 <p>Author Name</p>
+                                <div class="edit-overlay">
+                                    <i class="bx bxs-edit"></i>
+                                </div>
                             </div>
                             <div class="flag-categ vertical-flex">
                                 <span>Available</span>
-                                <span>Category</span>
+                                <!--Editable Category-->
+                                <div class="edit-info">
+                                    <span>Category</span>
+                                    <div class="edit-overlay">
+                                        <i class="bx bxs-edit"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                            Nunc maximus, nulla ut commodo sagittis, sapien dui mattis 
-                            dui, non pulvinar lorem felis nec erat...
-                        </p>
+                        <!--Editable Description-->
+                        <div class="edit-info">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                Nunc maximus, nulla ut commodo sagittis, sapien dui mattis 
+                                dui, non pulvinar lorem felis nec erat...
+                            </p>
+                            <div class="edit-overlay">
+                                <i class="bx bxs-edit"></i>
+                            </div>
+                        </div>
                         <button class="blue-button">Borrow</button>
                         <button class="blue-button">Favourite</button>
                     </td>
@@ -57,6 +72,9 @@
                     <!-- Right Side: Book Cover -->
                     <td id="cover-preview" class="horizontal-center">
                         <img src="Cover.png" alt="Book Cover">
+                        <div class="edit-overlay">
+                            <i class="bx bxs-edit"></i>
+                        </div>
                     </td>
                 </tr>
             </table>
