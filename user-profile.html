@@ -20,46 +20,64 @@
             </li>
             <li id="profile">
                 <h1> <i0 class='bx bx-user-circle'></i0></h1>
-                <h5>Username</h5>
-                <h6>User</h6>
+                <div class="name-title">
+                    <h5>Username</h5>
+                    <h6>User</h6>
+                </div>
             </li>
         </ul>
     </nav>
-    <div class = "User profile">
-        <form action="">
+    <div class = "main-panel">
+        <form action="" id="profile-form">
             <!--Username, user and icon-->
             <h0> <i0 class='bx bx-user-circle'></i0></h0>
-            <h2>Username</h2>
-            <h3>User</h3>
+            <div class="name-title horizontal-center">
+                <h2>Username</h2>
+                <h3>User</h3>
+            </div>
             <!--First name and last name-->
-            <div class="Name">
-                <label for="First name">First name</label>
-                <input  type="text" placeholder="Your name"
-                required>
-                <label for="Last name">Last name</label>
-                <input  type="text" placeholder="Your last name">
-                
+            <div class="Name horizontal-flex vertical-center">
+                <!--Column for the email and first name inputs-->
+                <div class="vertical-flex">
+                    <div class="input-section">
+                        <label for="First name">First name</label>
+                        <input  type="text" placeholder="Your name"
+                        required>
+                    </div>
+                    <!--Email-->
+                    <div class="center-non">
+                     <div class="input-section">
+                            <label for="email">Email</label>
+                            <input  type="text" placeholder="Examble@gmail.com"
+                            required>
+                        </div>
+                    </div>
+                </div>
+                <!--Last name input-->
+                <div class="input-section">
+                    <label for="Last name">Last name</label>
+                    <input  type="text" placeholder="Your last name">
+                </div>
+
             </div>
-            <!--Email-->
-            <div class="Email">
-                <label for="email">Email</label>
-                <input  type="text" placeholder="Examble@gmail.com"
-                required>
                 
-            </div>
+            
             <!--Password-->
-            <h4>Password</h4>
-            <div class="Password">
-                <label for="password">current password</label>
-                <input  type="password" placeholder="Password"
-                required>
-                <label for="password">new password</label>
-                <input  type="password" placeholder="Password"
-                required>
-                
+            <h2>Password</h2>
+            <div class="Password horizontal-flex vertical-center">
+                <div class="input-section">
+                    <label for="password">Current password</label>
+                    <input  type="password" placeholder="Password"
+                    required>
+                </div>
+                <div class="input-section">
+                    <label for="password">New password</label>
+                    <input  type="password" placeholder="Password"
+                    required>
+                </div>  
             </div>
             
-            <button type="submit" class="update-pw"> Update Password</button>
+            <button type="submit" class="update-pw blue-button"> Update Password</button>
             
         </form>
     </div>
