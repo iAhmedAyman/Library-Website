@@ -6,6 +6,15 @@ body {
     color: #192252;
 }
 
+img {
+    /*No drag or select*/
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
 button, a, .edit-overlay {
     cursor: pointer;
 }
@@ -82,6 +91,17 @@ button, a, .edit-overlay {
       }
 }
 
+@keyframes slideHero {
+    0% { transform: translateX(0%); }
+    14% { transform: translateX(0%); }
+    28% { transform: translateX(-100%); }
+    42% { transform: translateX(-100%); }
+    56% { transform: translateX(-200%); }
+    70% { transform: translateX(-200%); }
+    84% { transform: translateX(-300%); }
+    100% { transform: translateX(-300%); }
+}
+
 /* ----------Navigation Bar---------- */
 
 #navBar {
@@ -104,13 +124,6 @@ button, a, .edit-overlay {
     height: 5rem;
     width: auto;
     object-fit: contain;
-
-    /*No drag or select*/
-    user-select: none;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
 
 #profile {
@@ -286,23 +299,21 @@ a {
     display: flex;
     flex-direction: column;
     margin: 1rem;
-    width: 100%;
 }
 
 .input-section input {
-    width: 100%;
+    width: 15rem;
     height: 1.8rem;
     border: solid 1px #a9b1cb;
     border-radius: 5px;
 }
 
 #description-input {
-    width: 100%;
+    min-width: 32.5rem;
     min-height: 10rem;
     overflow: auto;
     resize: none;
 }
-
 /* ----------------------------- */
 
 /* ----------Buttons---------- */
@@ -327,6 +338,16 @@ a {
     transition: background-color 0.2s ease;
 }
 
+.gray-button {
+    width: 7rem;
+    height: 2rem;
+    background-color: #ecf1f8;
+    border-radius: 5px;
+    color: #464f6d;
+    border: solid 1px #6d758f;
+    transition: background-color 0.2s ease;
+}
+
 .blue-button:hover {
     background-color: #5a73f2;;
 }
@@ -342,6 +363,14 @@ a {
 .red-button:active {
     background-color: #a42833;
 }
+
+.gray-button:hover {
+    background-color: #dce4f0;
+}
+
+.gray-button:active {
+    background-color: #cfd9eb;
+}
 /* ----------------------------- */
 
 /* ----------Flag and Category---------- */
@@ -352,5 +381,52 @@ a {
     color: white;
     text-align: center;
     padding: 0.3rem;
+}
+/* ----------------------------- */
+
+/* ----------Carousel Hero---------- */
+.hero-carousel {
+    width: 50%;
+    overflow: hidden;
+    background: none;
+    height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-track {
+    display: flex;
+    animation: slideHero 20s infinite;
+    width: 300%;
+    transition: transform 1s ease;
+}
+
+.carousel-track:hover {
+    animation-play-state: paused; /* Pause animation on hover */
+}
+
+.slide {
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.slide p {
+    color: #464f6d;
+    text-align: center;
+}
+
+.arrow-button {
+    background: none;
+    border: solid 1px #192252;
+    color: #192252;
+    font-size: 1rem;
+    border-radius: 50%;
+    height: 1.5rem;
+    width: 1.5rem;
 }
 /* ----------------------------- */
