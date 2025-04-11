@@ -21,6 +21,7 @@
     cursor: pointer;
     padding-right: 20px;
     margin-left: auto;
+    user-select: none;
 }
 .box{
     width: 200px;
@@ -72,19 +73,60 @@
     transform: scale(1.05);
 }
 .status {
-    padding: 5px 10px;
-    border-radius: 10px;
     color: white;
-    font-size: 12px;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 500;
+    margin-left: 65px;
 }
-.available { background-color: green; }
-.borrowed { background-color: red; }
+.available { background-color: #4CAF50;}
+.borrowed { background-color: #E53935;}
         
-.add-button {
+.add-button:hover {
+    transform: scale(1.05);
+}
+
+.book-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 50px;
+    
+}
+
+.book-header .left h3 {
+    margin: 0;
+    font-size: 1.1em;
+    color: #333;
+    text-align: left;
+}
+
+.book-header .left .author {
+    margin: 2px 0;
+    font-size:11px;
+    color: #555;
+    text-align: left;
+}
+
+.description {
+    font-size: 0.9em;
+    color: #555;
+    text-align: left;
+    margin-top: 30px;
+}
+span {
+    float: right;
+    clear: right;
+    margin: 2px 0;
+    font-size: 11px;
+    color: #555;
+  }
+  .add-button {
     height: 80px;
     width: 80px;
     border-radius: 50%;
-    border: 1px solid red;
     border: none;
     position: fixed;
     bottom: 80px;
