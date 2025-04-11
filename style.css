@@ -6,6 +6,10 @@ body {
     color: #192252;
 }
 
+button, a, .edit-overlay {
+    cursor: pointer;
+}
+
 .horizontal-center {
     display: flex;
     flex-direction: column;
@@ -32,16 +36,18 @@ body {
     display: flex;
     flex-direction: column;
 }
-/* keyframes used */
+
+.space-between {
+    justify-content: space-between;
+}
+
+/* ----------Animation---------- */
 @keyframes gradientMove {
     0% {
-        background-position: 100% 66%;
-    }
-    50% {
-        background-position: 66% 33%;
+        background-position: 200% 50%;
     }
     100% {
-        background-position: 33% 0%;
+        background-position: 0% 50%;
     }
 }
 @keyframes sheen {
@@ -121,15 +127,8 @@ body {
     padding-block: 1%;
     gap: 2rem;
     margin-left: 6rem;
-    
 }
-#pages a:hover {
-    text-decoration: underline;
-    text-decoration-color: #384cba;
-    text-decoration-thickness: 3px;
-    animation: sheen2 0.6s, ease;
-    
-}
+
 a {
     text-decoration: none;
 }
@@ -165,6 +164,7 @@ a {
 
 .main-panel {
     min-height: 60vh;
+    min-width: 45rem;
     padding: 5%;
     background-color: #fafafa;
     border-radius: 0.3rem;
@@ -183,11 +183,17 @@ a {
     align-items: center;
 }
 
+#description-preview {
+    max-width: 30rem;
+    max-height: 10rem;
+    overflow: auto;
+}
+
 #profile-form > h0 {
     font-size: 10rem;
     font-weight: bold;
     /* Create a linear gradient that spans multiple colors */
-    background: linear-gradient(90deg, rgb(0, 72, 255), rgb(21, 106, 159), rgb(49, 147, 233), rgb(0, 47, 128), rgb(50, 77, 251), rgb(46, 27, 140), rgb(49, 24, 163));
+    background: linear-gradient(90deg, rgb(0, 72, 255), rgb(0, 47, 128), rgb(50, 77, 251), rgb(46, 27, 140), rgb(0, 72, 255));
     background-size: 200% 100%; /* Increase the background's width to allow movement */
     
     /* Clip the background to the text */
@@ -198,14 +204,68 @@ a {
     -webkit-text-fill-color: transparent;
     
     /* Apply the animation */
-    animation: gradientMove 8s linear infinite;
+    animation: gradientMove 5s linear infinite;
 }
 /* ----------------------------- */
 
 /* ----------Cover Preview---------- */
 #cover-preview {
-    width: 50%;
+    position: relative;
+    align-items: last baseline;
+    margin-left: 2rem;
 }
+
+#cover-preview img {
+    max-height: 20rem;
+}
+/* ----------------------------- */
+
+/* ----------Edit Book---------- */
+.edit-info {
+    position: relative;
+    display: inline-block;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.edit-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.301);
+    border: solid 1px black;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.3s ease, background-color 0.2s ease;
+}
+
+.edit-overlay:active {
+    background-color: rgba(0, 0, 0, 0.501);
+}
+
+.edit-overlay i {
+    font-size: 400%;
+    color: #192252;
+}
+
+.small-edit i {
+    font-size: 200%;
+}
+
+.round-edit {
+    border-radius: 15rem;
+}
+
+.edit-overlay:hover {
+    opacity: 1;
+    z-index: 10;
+}
+
 /* ----------------------------- */
 
 /* ----------Name and Title---------- */
@@ -234,23 +294,61 @@ a {
     border: solid 1px #a9b1cb;
     border-radius: 5px;
 }
+
+#description-input {
+    min-width: 32.5rem;
+    min-height: 10rem;
+    overflow: auto;
+    resize: none;
+}
 /* ----------------------------- */
 
+/* ----------Buttons---------- */
 .blue-button {
-    width: 8rem;
+    width: 5rem;
     height: 2rem;
     background-color: #465fe9;
     border-color: #465fe9;
     border-radius: 5px;
     color: white;
     border: none;
+    transition: background-color 0.2s ease;
+}
+
+.red-button {
+    width: 6rem;
+    height: 2rem;
+    background-color: #dc3645;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    transition: background-color 0.2s ease;
 }
 
 .blue-button:hover {
-    animation: sheen 0.6s, ease;
-    
+    background-color: #5a73f2;;
 }
 
 .blue-button:active {
-    background-color: #3b3b3b;
+    background-color: #384cba;
 }
+
+.red-button:hover {
+    background-color: #e75360;
+}
+
+.red-button:active {
+    background-color: #a42833;
+}
+/* ----------------------------- */
+
+/* ----------Flag and Category---------- */
+.flag-categ > :first-child {
+    display: inline-block;
+    background-color: #198754;
+    border-radius: 50px;
+    color: white;
+    text-align: center;
+    padding: 0.3rem;
+}
+/* ----------------------------- */
