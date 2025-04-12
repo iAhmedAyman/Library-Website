@@ -76,148 +76,6 @@ button, a, .edit-overlay {
     100% { transform: translateX(-300%); }
 }
 
-.container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
-}
-
-.header-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.header-container h1 {
-    flex-grow: 1;
-    font-size: 1.8rem;
-}
-
-.filter {
-    margin-right: 1rem;
-    cursor: pointer;
-}
-
-.filter i1 {
-    font-size: 1.5rem;
-}
-
-.box {
-    display: flex;
-    align-items: center;
-    background-color: #f0f0f0;
-    border-radius: 50px;
-    padding: 0.5rem 1rem;
-}
-
-.box i {
-    margin-right: 0.5rem;
-    color: #666;
-}
-
-.box input {
-    border: none;
-    background-color: transparent;
-    outline: none;
-    width: 200px;
-}
-
-/* Book cards styling */
-.books {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center; /* Center the book cards */
-}
-
-.book-card {
-    position: relative;
-    width: 250px;
-    height: 350px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s;
-}
-
-.book-card:hover {
-    transform: translateY(-5px);
-}
-
-.book-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.book-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 1rem;
-    transform: translateY(65%);
-    transition: transform 0.3s;
-}
-
-.book-card:hover .book-overlay {
-    transform: translateY(0);
-}
-
-.book-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-}
-
-.left h3 {
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.author {
-    margin: 0.2rem 0 0 0;
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.status {
-    padding: 0.2rem 0.5rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    margin-bottom: 0.3rem;
-}
-
-.available {
-    background-color: #e6f7e6;
-    color: #2e7d32;
-}
-
-.borrowed {
-    background-color: #ffebee;
-    color: #c62828;
-}
-
-.category {
-    font-size: 0.8rem;
-    color: #666;
-}
-
-.description {
-    margin-top: 0.8rem;
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
 /* ----------Navigation Bar---------- */
 
 #navBar {
@@ -609,6 +467,8 @@ a {
         grid-template-columns: repeat(1, 1fr);
     }
 }
+/* ----------------------------- */
+
 @media screen and (max-width: 768px) {
     /* Navigation bar adjustments */
     #navBar {
