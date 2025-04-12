@@ -78,6 +78,7 @@ button, a, .edit-overlay {
 
 /* ----------Navigation Bar---------- */
 
+/* Base Navigation Bar Styles */
 #navBar {
     width: 100%;
     list-style-type: none;
@@ -89,7 +90,93 @@ button, a, .edit-overlay {
     align-items: center;
     justify-content: space-between;
 }
+#pages a {
+    position:relative;
+    display: flex;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 5px 10px;
+    overflow: hidden; 
+    font-size: 20px;
+    color: #464f6d;
+    white-space: nowrap;
+}
+#home::before {
+    content: "Home";
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    overflow: hidden;
+    color: #2947f1;
+    transition: 0.8s ease-in-out;
+}
+#home:hover::before {
+    text-decoration: underline;
+    width: 100%;
+    filter: drop-shadow(0 0 25px #2947f1);
+}
 
+#books::before {
+    content: "Books";
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    overflow: hidden;
+    color: #2947f1;
+    transition: 0.8s ease-in-out;
+}
+#books:hover::before {
+    text-decoration: underline;
+    width: 100%;
+    filter: drop-shadow(0 0 25px #2947f1);
+}
+
+#my-books::before {
+    content: "My Books";
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    overflow: hidden;
+    color: #2947f1;
+    transition: 0.8s ease-in-out;
+}
+#my-books:hover::before {
+    text-decoration: underline;
+    width: 100%;
+    filter: drop-shadow(0 0 25px #2947f1);
+}
+#about-us {
+    position: relative
+}
+#about-us::before {
+    content: "About Us";
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    overflow: hidden;
+    color: #2947f1;
+    transition: 0.8s ease-in-out;
+}
+#about-us:hover::before {
+    text-decoration: underline;
+    width: 100%;
+    filter: drop-shadow(0 0 25px #2947f1);
+}
+
+#pages a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, 
+                  transparent, 
+                  rgba(255, 255, 255, 0.7), 
+                  transparent);
+    transform: skewX(-25deg); /* Skew to create a diagonal flash effect */
+  }
+  
 #logo {
     margin-left: 2%;
 }
@@ -112,6 +199,7 @@ button, a, .edit-overlay {
 }
 
 #pages {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,11 +208,17 @@ button, a, .edit-overlay {
     margin-left: 6rem;
 }
 
-a {
-    text-decoration: none;
+#pages a:hover::after {
+    
+    animation: sparkle 0.8s forwards;
+  }
+@keyframes sparkle {
+to {
+    left: 100%;
+}
 }
 
-#profile a{
+#profile a {
     border-radius: 0.3rem;
     width: 6rem;
     height: 2rem;
@@ -145,9 +239,6 @@ a {
     color: white;
 }
 
-#pages a {
-    color: #464f6d;
-}
 /* ----------------------------- */
 
 
