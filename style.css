@@ -76,6 +76,148 @@ button, a, .edit-overlay {
     100% { transform: translateX(-300%); }
 }
 
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.header-container h1 {
+    flex-grow: 1;
+    font-size: 1.8rem;
+}
+
+.filter {
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.filter i1 {
+    font-size: 1.5rem;
+}
+
+.box {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+}
+
+.box i {
+    margin-right: 0.5rem;
+    color: #666;
+}
+
+.box input {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    width: 200px;
+}
+
+/* Book cards styling */
+.books {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center; /* Center the book cards */
+}
+
+.book-card {
+    position: relative;
+    width: 250px;
+    height: 350px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+}
+
+.book-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.book-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    transform: translateY(65%);
+    transition: transform 0.3s;
+}
+
+.book-card:hover .book-overlay {
+    transform: translateY(0);
+}
+
+.book-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.left h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.author {
+    margin: 0.2rem 0 0 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.status {
+    padding: 0.2rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.available {
+    background-color: #e6f7e6;
+    color: #2e7d32;
+}
+
+.borrowed {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.category {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.description {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
 /* ----------Navigation Bar---------- */
 
 #navBar {
@@ -466,5 +608,172 @@ a {
     .features-grid {
         grid-template-columns: repeat(1, 1fr);
     }
+}
+@media screen and (max-width: 768px) {
+    /* Navigation bar adjustments */
+    #navBar {
+        padding: 0.8rem 0.5rem;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    #logo {
+        margin-left: 0;
+    }
+    
+    #logo > img {
+        height: 3.5rem; /* Larger logo */
+    }
+    
+    /* Pages section with larger text */
+    #pages {
+        margin-left: 1rem;
+        gap: 1.2rem; /* More space between links */
+    }
+    
+    #pages a {
+        font-size: 1.1rem; /* Larger font for nav links */
+        font-weight: 500; /* Slightly bolder */
+        padding: 0.5rem 0; /* Taller touch target */
+    }
+    
+    /* Profile section with larger elements */
+    #profile {
+        margin-right: 0;
+        gap: 0.8rem;
+    }
+    
+    #profile i {
+        font-size: 2.8rem; /* Larger icon */
+    }
+    
+    #profile h5 {
+        font-size: 1.1rem; /* Larger username */
+        margin: 0;
+    }
+    
+    #profile h6 {
+        font-size: 0.9rem; /* Larger user label */
+        margin: 0;
+    }
+    
+    /* Main panel adjustments */
+    .main-panel {
+        min-width: unset;
+        width: 90%;
+        margin: 1rem auto;
+        padding: 1.5rem;
+    }
+    
+    /* Form elements */
+    #description-input {
+        min-width: unset;
+        width: 100%;
+    }
+    
+    .input-section input {
+        width: 100%;
+    }
+    
+    /* Feature grid */
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 576px) {
+    /* Adjust navbar layout but keep elements larger */
+    #navBar {
+        padding: 0.7rem 0.4rem;
+    }
+    
+    #logo > img {
+        height: 3rem; /* Still a good size */
+    }
+    
+    /* Keep page links large but reduce spacing */
+    #pages {
+        gap: 0.8rem;
+        margin-left: 0.6rem;
+    }
+    
+    #pages a {
+        font-size: 1rem; /* Still larger than original */
+        padding: 0.4rem 0;
+    }
+    
+    /* Keep profile elements large */
+    #profile {
+        gap: 0.5rem;
+    }
+    
+    #profile i {
+        font-size: 2.5rem; /* Maintain good size */
+    }
+    
+    #profile h5 {
+        font-size: 1rem;
+    }
+    
+    #profile h6 {
+        font-size: 0.85rem;
+    }
+    
+    /* Single column feature grid */
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Very small devices */
+@media screen and (max-width: 400px) {
+    /* On very small screens, we may need to compromise */
+    #navBar {
+        overflow-x: auto; /* Allow scrolling if needed */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        scrollbar-width: none; /* Hide scrollbar in Firefox */
+    }
+    
+    #navBar::-webkit-scrollbar {
+        display: none; /* Hide scrollbar in Chrome/Safari */
+    }
+    
+    /* Keep important elements visible */
+    #logo > img {
+        height: 2.8rem;
+    }
+    
+    #pages {
+        gap: 0.6rem;
+    }
+    
+    #pages a {
+        font-size: 0.95rem;
+        white-space: nowrap;
+    }
+    
+    /* Maintain profile visibility */
+    #profile i {
+        font-size: 2.2rem;
+    }
+    
+    #profile h5, #profile h6 {
+        white-space: nowrap;
+    }
+}
+
+/* Global responsive elements */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Make content readable on all devices */
+p, h1, h2, h3, h4, h5, h6 {
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 /* ----------------------------- */
