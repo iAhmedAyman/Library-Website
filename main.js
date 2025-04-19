@@ -109,3 +109,37 @@ document.addEventListener('DOMContentLoaded', function() {
         console.table(JSON.parse(localStorage.getItem('books')) || []);
     };
 });
+
+// Function to load book cards data form localStorage
+function loadBooks() {
+    const bookContainer = document.querySelector(".books");
+    const books = JSON.parse(localStorage.getItem("books")) || [];
+
+    // clear static content
+    bookContainer.innerHTML = ""; 
+
+    books.forEach(book => {
+      const card = document.createElement("div");
+      card.classList.add("book-card");
+
+      card.innerHTML = `
+        <img src="${book.cover}" alt="Book Cover" class="book-img">
+        <a href="preview.html" class="book-overlay">
+          <div class="book-header">
+            <div class="left">
+              <h3>${book.title}</h3>
+              <p class="author">${book.author}</p>
+            </div>
+            <div class="right">
+              <span class="status ${book.status}">${book.status}</span>
+              <span class="category"><i class='bx bx-purchase-tag'></i>${book.category}</span>
+            </div>
+          </div>
+          <p class="description">Description: ${book.description}</p>
+        </a>
+      `;
+      bookContainer.appendChild(card);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", loadBooks);
