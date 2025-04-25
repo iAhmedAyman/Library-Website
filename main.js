@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         categoryInput.value = '';
         idInput.value = '';
         descriptionInput.value = '';
+        window.location.href = `preview.html?id=${book.id}`;
     }
     
     // Add event listener to the Add Book button
