@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let matchesFilter = true;
             if (filterType && filterValue) {
-                matchesFilter = card.querySelector(`.${filterType}`)?.textContent.toLowerCase().includes(filterValue);
+                const cardValue = card.querySelector(`.${filterType}`)?.textContent.toLowerCase().trim();
+                matchesFilter = cardValue === filterValue; // Require exact match
             }
 
             if (matchesSearch && matchesFilter) {
@@ -56,20 +57,25 @@ document.addEventListener("DOMContentLoaded", () => {
         filterMenu.querySelectorAll("div").forEach(option => {
             option.addEventListener("click", () => {
                 const filterType = option.getAttribute("data-filter-type");
-                const userInput = prompt(`Enter ${filterType} name:`);
-                if (userInput === null || userInput.trim().toLowerCase() === "cancel") {
-                    filterMenu.style.display = "none"; // Hide menu if user cancels
+
+                const userInput = prompt(`Enter full ${filterType} name:`);
+
+                // Cancel or "cancel" keyword
+                if (!userInput || userInput.trim().toLowerCase() === "cancel") {
+                    filterMenu.style.display = "none";
                     return;
                 }
-                const filterValue = prompt(`Enter ${filterType} name:`).toLowerCase(); // Ask user input
+
+                const filterValue = userInput.trim().toLowerCase();
+
                 filterBooks(container, input, filterType, filterValue);
+                filterMenu.style.display = "none";
             });
         });
 
         // Live search
         input.addEventListener("input", () => {
-            filterBooks(container, input); // Only search, no filter
+            filterBooks(container, input);
         });
     });
 });
-
