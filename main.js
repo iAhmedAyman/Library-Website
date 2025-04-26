@@ -201,72 +201,90 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 });
 
-// Function to load book cards data form localStorage
-function loadBooks() {
-  const bookContainer = document.querySelector(".books");
-  const books = JSON.parse(localStorage.getItem("books")) || [];
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    const filterIcon = document.getElementById("filterIcon");
+    const filterMenu = document.getElementById("filterMenu");
+    // Load books initially
+    loadBooks();
 
-  // clear static content
-  bookContainer.innerHTML = ""; 
-
-  books.forEach(book => {
-    const card = document.createElement("div");
-    card.classList.add("book-card");
-    const userJson = localStorage.getItem("user");
-
-    const userPreview = `
-    <img src="${book.cover}" alt="Book Cover" class="book-img">
-      <a href="preview.html?id=${book.id}" class="book-overlay">
-        <div class="book-header">
-          <div class="left">
-            <h3>${book.title}</h3>
-            <p class="author">${book.author}</p>
-          </div>
-          <div class="right">
-            <span class="status ${book.status}">${book.status || 'available'}</span>
-            <span class="category"><i class='bx bx-purchase-tag'></i>${book.category}</span>
-          </div>
-        </div>
-        <p class="description">Description: ${book.description}</p>
-      </a>
-    `;
-
-    const adminPreview = `
-    <img src="${book.cover}" alt="Book Cover" class="book-img">
-      <a href="previewEdit.html?id=${book.id}" class="book-overlay">
-        <div class="book-header">
-          <div class="left">
-            <h3>${book.title}</h3>
-            <p class="author">${book.author}</p>
-          </div>
-          <div class="right">
-            <span class="status ${book.status}">${book.status || 'available'}</span>
-            <span class="category"><i class='bx bx-purchase-tag'></i>${book.category}</span>
-          </div>
-        </div>
-        <p class="description">Description: ${book.description}</p>
-      </a>
-    `;
-
-    if (!userJson) {
-      card.innerHTML = userPreview;
-    } 
-    else {
-      try {
-          const { username, role } = JSON.parse(userJson);
-          if (role === "admin") {
-              card.innerHTML = adminPreview;
-          } else {
-              card.innerHTML = userPreview;
-          }
-      } catch (e) {
-          console.error("Invalid user data in storage:", e);
-          card.innerHTML = userPreview;
-      }
+    // Search filter
+    if (searchInput) {
+        searchInput.addEventListener("input", function () {
+            const searchValue = this.value.trim();
+            loadBooks(searchValue);
+        });
     }
+    
+    if (filterIcon && filterMenu) {
+        // Toggle menu visibility
+        filterIcon.addEventListener("click", () => {
+            filterMenu.style.display = (filterMenu.style.display === "none") ? "block" : "none";
+        });
+    
+        // Add click listeners for each filter choice
+        filterMenu.addEventListener("click", function (e) {
+            const filterType = e.target.dataset.filterType;
+            if (!filterType) return;
+    
+            const userInput = prompt(`Enter ${filterType === "category" ? "Category" : "Author"} to filter:`);
+    
+            if (userInput) {
+                loadBooks("", filterType, userInput.trim().toLowerCase());
+            }
+    
+            // Hide the menu after selection
+            filterMenu.style.display = "none";
+        });
+    }
+    
+});
 
-    bookContainer.appendChild(card);
-  });
+function loadBooks(searchText = "", filterType = "", filterValue = "") {
+    const bookContainer = document.querySelector(".books");
+    const books = JSON.parse(localStorage.getItem("books")) || [];
+
+    bookContainer.innerHTML = "";
+
+    const filteredBooks = books.filter(book => {
+        const matchesSearch = (
+            book.title.toLowerCase().includes(searchText.toLowerCase()) ||
+            book.author.toLowerCase().includes(searchText.toLowerCase()) ||
+            book.category.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        let matchesFilter = true;
+
+        if (filterType === "category") {
+            matchesFilter = book.category.toLowerCase() === filterValue;
+        } else if (filterType === "author") {
+            matchesFilter = book.author.toLowerCase() === filterValue;
+        }
+
+        return matchesSearch && matchesFilter;
+    });
+
+    filteredBooks.forEach(book => {
+        const card = document.createElement("div");
+        card.classList.add("book-card");
+
+        card.innerHTML = `
+            <img src="${book.cover || 'default-cover.jpg'}" alt="Book Cover" class="book-img">
+            <a href="preview.html?id=${book.id}" class="book-overlay">
+                <div class="book-header">
+                    <div class="left">
+                        <h3>${book.title}</h3>
+                        <p class="author">${book.author}</p>
+                    </div>
+                    <div class="right">
+                        <span class="status ${book.status}">${book.status}</span>
+                        <span class="category"><i class='bx bx-purchase-tag'></i>${book.category}</span>
+                    </div>
+                </div>
+                <p class="description">Description: ${book.description}</p>
+            </a>
+        `;
+
+        bookContainer.appendChild(card);
+    });
 }
-
-document.addEventListener("DOMContentLoaded", loadBooks);
