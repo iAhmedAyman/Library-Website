@@ -200,7 +200,6 @@ document.addEventListener('DOMContentLoaded', function() {
       console.table(JSON.parse(localStorage.getItem('books')) || []);
   };
 });
-
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("searchInput");
     const filterIcon = document.getElementById("filterIcon");
@@ -227,7 +226,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const filterType = e.target.dataset.filterType;
             if (!filterType) return;
     
-            const userInput = prompt(`Enter ${filterType === "category" ? "Category" : "Author"} to filter:`);
+            let promptText = "";
+            if (filterType === "category") promptText = "Enter Category to filter:";
+            else if (filterType === "author") promptText = "Enter Author to filter:";
+            else if (filterType === "availability") promptText = "Enter Availability (e.g., Available, Checked Out) to filter:";
+
+            const userInput = prompt(promptText);
     
             if (userInput) {
                 loadBooks("", filterType, userInput.trim().toLowerCase());
@@ -259,8 +263,9 @@ function loadBooks(searchText = "", filterType = "", filterValue = "") {
             matchesFilter = book.category.toLowerCase() === filterValue;
         } else if (filterType === "author") {
             matchesFilter = book.author.toLowerCase() === filterValue;
+        } else if (filterType === "availability") {
+            matchesFilter = book.status.toLowerCase() === filterValue;
         }
-
         return matchesSearch && matchesFilter;
     });
 
