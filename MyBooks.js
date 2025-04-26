@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadBorrowedBooks();
     loadFavoriteBooks();
     
-    // === Utility function to filter cards ===
+    // Utility function to filter cards
     function filterBooks(container, searchInput, filterType = null, filterValue = null) {
         const cards = container.querySelectorAll(".book-card");
         const query = searchInput.value.toLowerCase();
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // === Function to load borrowed books ===
+    // Function to load borrowed books
     function loadBorrowedBooks() {
         const borrowedContainer = document.querySelectorAll(".container")[0];
         const borrowedBooksSection = borrowedContainer.querySelector(".books-section") || borrowedContainer;
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return card;
     }
 
-    // === SETUP SEARCH FOR BOTH SECTIONS ===
+    // SETUP SEARCH FOR BOTH SECTIONS
     const sections = [
         {
             container: document.querySelectorAll(".container")[0],
