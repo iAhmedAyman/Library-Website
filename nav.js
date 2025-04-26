@@ -105,22 +105,55 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-	// Logout functionality
+    // Logout functionality
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
-		console.log("Signing out user...");
-		
-		// Keep user data but mark as signed out
-		const userData = localStorage.getItem('user');
-		if (userData) {
-			const user = JSON.parse(userData);
-			user.isSignedIn = false;
-			localStorage.setItem('user', JSON.stringify(user));
-		}
-		
-		// Redirect to sign-in page
-		window.location.href = 'sign-in.html';
+            e.preventDefault();
+            showLogoutConfirmation(); // Call custom confirmation
         });
     }
+
+    //confirmation box function
+    function showLogoutConfirmation() {
+        if (document.getElementById('confirm-box')) return;
+
+        const confirmBox = document.createElement('div');
+        confirmBox.id = 'confirm-box';
+        confirmBox.style.position = 'fixed';
+        confirmBox.style.top = '50%';
+        confirmBox.style.left = '50%';
+        confirmBox.style.transform = 'translate(-50%, -50%)';
+        confirmBox.style.backgroundColor = '#fff';
+        confirmBox.style.padding = '20px';
+        confirmBox.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
+        confirmBox.style.borderRadius = '8px';
+        confirmBox.style.zIndex = '1000';
+        confirmBox.style.textAlign = 'center';
+        confirmBox.style.width = '300px';
+
+        confirmBox.innerHTML = `
+            <p style="margin-bottom: 20px; font-size: 16px;">Are you sure you want to log out?</p>
+            <button class="blue-button" id="confirm-yes" style="margin: 5px;">Yes</button>
+            <button class="blue-button" id="confirm-no" style="margin: 5px;">No</button>
+        `;
+
+        document.body.appendChild(confirmBox);
+
+        document.getElementById('confirm-yes').addEventListener('click', function() {
+            console.log("Signing out user...");
+            const userData = localStorage.getItem('user');
+            if (userData) {
+                const user = JSON.parse(userData);
+                user.isSignedIn = false;
+                localStorage.setItem('user', JSON.stringify(user));
+            }
+            window.location.href = 'sign-in.html';
+        });
+
+        document.getElementById('confirm-no').addEventListener('click', function() {
+            confirmBox.remove();
+        });
+    }
+
 });
