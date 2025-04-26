@@ -1,39 +1,51 @@
 document.getElementById('signup-form').addEventListener('submit', function(event) {
   event.preventDefault();
 
-  const username = document.getElementById('username').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-  const confirmPassword = document.getElementById('confirm').value;
-  const role = document.querySelector('input[name="role"]:checked').value;
+  clearErrors(); 
+
+  const usernameInput = document.getElementById('username');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const confirmInput = document.getElementById('confirm');
+  const roleInput = document.querySelector('input[name="role"]:checked');
+
+  const username = usernameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+  const confirmPassword = confirmInput.value;
+  const role = roleInput ? roleInput.value : null;
 
   if (!isValidUsername(username)) {
-    alert('Invalid username! Username must be 3-20 characters long and can only contain letters, numbers, and underscores.');
+    showFieldError(usernameInput, 'Username must be 3-20 characters long and only contain letters, numbers, and underscores.');
     return;
   }
 
   if (!isValidEmail(email)) {
-    alert('Invalid email format!');
+    showFieldError(emailInput, 'Invalid email format.');
     return;
   }
 
-  if (password !== confirmPassword) {
-    alert('Passwords do not match!');
-    return;
-  }
-
-  // checks if user already exists
   const storedUser = JSON.parse(localStorage.getItem('user'));
 
   if (storedUser) {
     if (storedUser.username === username) {
-      alert('Username already taken. Please choose another one.');
+      showFieldError(usernameInput, 'Username already taken.');
       return;
     }
     if (storedUser.email === email) {
-      alert('Email already exists. Please use a different email.');
+      showFieldError(emailInput, 'Email already registered.');
       return;
     }
+  }
+
+  if (password.length < 6) {
+    showFieldError(passwordInput, 'Password must be at least 6 characters.');
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    showFieldError(confirmInput, 'Passwords do not match.');
+    return;
   }
 
   const user = {
@@ -44,16 +56,34 @@ document.getElementById('signup-form').addEventListener('submit', function(event
   };
 
   localStorage.setItem('user', JSON.stringify(user));
-
   window.location.href = 'sign-in.html';
 });
+
 // username validation
 function isValidUsername(username) {
   const usernamePattern = /^[a-zA-Z0-9_]{3,20}$/;
   return usernamePattern.test(username);
 }
-// email validation function
+
+// email validation
 function isValidEmail(email) {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailPattern.test(email);
+}
+
+// show error under input field
+function showFieldError(inputElement, message) {
+  let error = document.createElement('div');
+  error.className = 'field-error';
+  error.style.color = 'red';
+  error.style.fontSize = '12px';
+  error.style.marginTop = '5px';
+  error.textContent = message;
+
+  inputElement.parentNode.insertBefore(error, inputElement.nextSibling);
+}
+
+function clearErrors() {
+  const previousErrors = document.querySelectorAll('.field-error');
+  previousErrors.forEach(error => error.remove());
 }
