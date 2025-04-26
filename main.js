@@ -151,8 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Function to save book
   function saveBook() {
       if (!validateForm()) return;
-
-      console.log(coverImage.src);
       
       // Create book object
       const book = {
@@ -162,7 +160,8 @@ document.addEventListener('DOMContentLoaded', function() {
           category: categoryInput.value.trim(),
           description: descriptionInput.value.trim(),
           dateAdded: new Date().toISOString(),
-          cover: coverImage.src
+          cover: coverImage.src,
+          available: true
       };
       
       // Check if ID already exists (except when it's auto-generated)
@@ -189,13 +188,12 @@ document.addEventListener('DOMContentLoaded', function() {
       categoryInput.value = '';
       idInput.value = '';
       descriptionInput.value = '';
-      window.location.href = `preview.html?id=${book.id}`;
+      window.location.href = `previewEdit.html?id=${book.id}`;
   }
   
   // Add event listener to the Add Book button
   addButton.addEventListener('click', saveBook);
   
-  // Optional: Create a function to display all books (for testing)
   window.displayBooks = function() {
       console.table(JSON.parse(localStorage.getItem('books')) || []);
   };
@@ -272,23 +270,58 @@ function loadBooks(searchText = "", filterType = "", filterValue = "") {
     filteredBooks.forEach(book => {
         const card = document.createElement("div");
         card.classList.add("book-card");
+        const userJson = localStorage.getItem("user");
 
-        card.innerHTML = `
-            <img src="${book.cover || 'default-cover.jpg'}" alt="Book Cover" class="book-img">
-            <a href="preview.html?id=${book.id}" class="book-overlay">
-                <div class="book-header">
-                    <div class="left">
-                        <h3>${book.title}</h3>
-                        <p class="author">${book.author}</p>
-                    </div>
-                    <div class="right">
-                        <span class="status ${book.status}">${book.status}</span>
-                        <span class="category"><i class='bx bx-purchase-tag'></i>${book.category}</span>
-                    </div>
-                </div>
-                <p class="description">Description: ${book.description}</p>
-            </a>
-        `;
+      const userPreview = `
+      <img src="${book.cover}" alt="Book Cover" class="book-img">
+        <a href="preview.html?id=${book.id}" class="book-overlay">
+          <div class="book-header">
+            <div class="left">
+              <h3>${book.title}</h3>
+              <p class="author">${book.author}</p>
+            </div>
+            <div class="right">
+              <span class="status ${book.available? "available" : "borrowed"}">${book.available? "Available" : "Borrowed"}</span>
+              <span class="category"><i class='bx bx-purchase-tag'></i>${book.category}</span>
+            </div>
+          </div>
+            <p class="description">Description: ${book.description.slice(0, 140)}${book.description.length > 140 ? "..." : ""}</p>
+        </a>
+      `;
+
+      const adminPreview = `
+      <img src="${book.cover}" alt="Book Cover" class="book-img">
+        <a href="previewEdit.html?id=${book.id}" class="book-overlay">
+          <div class="book-header">
+            <div class="left">
+              <h3>${book.title}</h3>
+              <p class="author">${book.author}</p>
+            </div>
+            <div class="right">
+              <span class="status ${book.available? "available" : "borrowed"}">${book.available? "Available" : "Borrowed"}</span>
+              <span class="category"><i class='bx bx-purchase-tag'></i>${book.category}</span>
+            </div>
+          </div>
+            <p class="description">Description: ${book.description.slice(0, 140)}${book.description.length > 140 ? "..." : ""}</p>
+        </a>
+      `;
+
+      if (!userJson) {
+        card.innerHTML = userPreview;
+      } 
+      else {
+        try {
+            const { username, role } = JSON.parse(userJson);
+            if (role === "admin") {
+                card.innerHTML = adminPreview;
+            } else {
+                card.innerHTML = userPreview;
+            }
+        } catch (e) {
+            console.error("Invalid user data in storage:", e);
+            nav.innerHTML = anonNav;
+        }
+      }
 
         bookContainer.appendChild(card);
     });

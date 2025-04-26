@@ -27,15 +27,20 @@ window.addEventListener("DOMContentLoaded", () => {
           <a href="About-us.html" id="about-us">About Us</a>
         </li>
         <li id="profile">
-          <a href="user-profile.html" id="profile-img">
+          <div id="profile-img">
             <h1><i class='bx bx-user-circle'></i></h1>
             <div class="name-title">
               <h5>${username}</h5>
               <h6>Admin</h6>
             </div>
-          </a>
+          </div>
         </li>
       </ul>
+	  <!-- Dropdown Menu -->
+	  <div id="profile-dropdown" class="dropdown-menu hidden">
+		  <a href="user-profile.html">View Profile</a>
+		  <a href="#" id="logout-btn">Logout</a>
+	  </div>
     `;
   
     const userNav = (username) => `
@@ -48,13 +53,18 @@ window.addEventListener("DOMContentLoaded", () => {
           <a href="About-us.html" id="about-us">About Us</a>
         </li>
         <li id="profile">
-          <a href="user-profile.html" id="profile-img">
+          <div id="profile-img">
             <h1><i class='bx bx-user-circle'></i></h1>
             <div class="name-title">
               <h5>${username}</h5>
               <h6>User</h6>
             </div>
-          </a>
+          </div>
+          <!-- Dropdown Menu -->
+          <div id="profile-dropdown" class="dropdown-menu hidden">
+              <a href="user-profile.html">View Profile</a>
+              <a href="#" id="logout-btn">Logout</a>
+          </div>
         </li>
       </ul>
     `;
@@ -76,3 +86,41 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
   
+
+window.addEventListener("DOMContentLoaded", () => {
+    const profile = document.getElementById('profile-img');
+    const dropdown = document.getElementById('profile-dropdown');
+
+    // Make drop down visible
+    profile.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log("Profile clicked!");  // Debugging
+        dropdown.classList.toggle('hidden');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!profile.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.add('hidden');
+        }
+    });
+
+	// Logout functionality
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+		console.log("Signing out user...");
+		
+		// Keep user data but mark as signed out
+		const userData = localStorage.getItem('user');
+		if (userData) {
+			const user = JSON.parse(userData);
+			user.isSignedIn = false;
+			localStorage.setItem('user', JSON.stringify(user));
+		}
+		
+		// Redirect to sign-in page
+		window.location.href = 'sign-in.html';
+        });
+    }
+});

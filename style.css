@@ -12,6 +12,10 @@ body {
     color: #192252;
 }
 
+nav {
+    position: relative;
+}
+
 a {
     text-decoration: none;
 }
@@ -111,6 +115,10 @@ button, a, .edit-overlay {
 
 #profile-img {
     color: #192252;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
 }
 
 #home::before {
@@ -249,6 +257,40 @@ to {
 #profile-sign-in {
     background-color: #465fe9;
     color: white;
+}
+
+#profile {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 4rem;
+    right: 0.5rem; 
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+.dropdown-menu a {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: black;
+    transition: background 0.3s;
+}
+
+.dropdown-menu a:hover {
+    background: #f0f0f0;
+}
+
+.hidden {
+    display: none;
 }
 /* ----------------------------- */
 
