@@ -37,12 +37,16 @@
             <h1 style="padding-left: 20px;">Books</h1>
             
             <div class=" filter">
-                <i1 class='bx bx-filter'></i1>
+                <i1 id="filterIcon" class='bx bx-filter'></i1>
+                <div id="filterMenu" class="filter-menu" style="display: none;">
+                    <div data-filter-type="category">Filter by Category</div>
+                    <div data-filter-type="author">Filter by Author</div>
+                </div>
             </div>
 
             <div class="box">
                 <i class='bx bx-search'></i>
-                <input type="text" name="" placeholder="Search">
+                <input type="text" id="searchInput" name="" placeholder="Search">
             </div>
         </div>
         
