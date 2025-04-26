@@ -42,25 +42,32 @@
                     <td>
                         <div class="horizontal-flex space-between">
                             <!--Editable Title and Author Name-->
-                            <div class="name-title edit-info">
-                                <h1>Title</h1>
-                                <p>Author Name</p>
-                                <div class="edit-overlay small-edit">
-                                    <i class="bx bxs-edit"></i>
+                            <div class="name-title">
+                                <div class="edit-info">
+                                    <h1>Title</h1>
+                                    <div class="edit-overlay small-edit" id="title-edit">
+                                        <i class="bx bxs-edit"></i>
+                                    </div>
+                                </div>
+                                <div class="edit-info">
+                                    <p>Author Name</p>
+                                    <div class="edit-overlay small-edit" id="author-edit">
+                                        <i class="bx bxs-edit"></i>
+                                    </div>
                                 </div>
                             </div>
                             <div class="flag-categ vertical-flex">
                                 <span>Available</span>
                                 <!--Editable Category-->
                                 <div class="edit-info" style="margin: 0;">
-                                    <span><i class='bx bx-purchase-tag'></i>Category</span>
+                                    <span class="category"><i class='bx bx-purchase-tag'></i>Category</span>
                                     <div class="edit-overlay small-edit round-edit">
                                         <i class="bx bxs-edit"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="vertical-flex">
+                        <div class="description vertical-flex">
                             <!--Editable Description-->
                             <div class="edit-info">
                                 <p id="description-preview">
@@ -76,7 +83,8 @@
 
                     <!-- Right Side: Book Cover -->
                     <td id="cover-preview" class="horizontal-center">
-                        <img src="Cover.png" alt="Book Cover">
+                        <input type="file" id="cover-upload" accept="image/*" style="display: none;">
+                        <img id="cover" src="Cover.png" alt="Book Cover">
                         <div class="edit-overlay">
                             <i class="bx bxs-edit"></i>
                         </div>
@@ -85,6 +93,8 @@
             </table>
         </div>
     </main>
-    <script src="nav.js"></script>   
+    <script src="nav.js"></script>
+    <script src="preview.js"></script>
+    <script src="previewEdit.js"></script>
 </body>
 </html>

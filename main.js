@@ -8,6 +8,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const idInput = document.querySelector('input[placeholder="Book ID"]');
     const descriptionInput = document.getElementById('description-input');
     const addButton = document.querySelector('.blue-button');
+
+    // Cover
+    const coverOverlay = document.querySelector('#cover-preview .edit-overlay');
+    const fileInput = document.getElementById('cover-upload');
+    const coverImage = document.querySelector('#cover-preview img');
+
+    // Clicking on the overlay opens the hidden file input
+    coverOverlay.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    // When a file is selected
+    fileInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const imageData = reader.result;
+                coverImage.src = imageData; // Show the new image
+                console.log(coverImage.src);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
     
     // Initialize books array from localStorage or create empty array if none exists
     let books = JSON.parse(localStorage.getItem('books')) || [];
@@ -64,6 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to save book
     function saveBook() {
         if (!validateForm()) return;
+
+        console.log(coverImage.src);
         
         // Create book object
         const book = {
@@ -72,7 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
             author: authorInput.value.trim(),
             category: categoryInput.value.trim(),
             description: descriptionInput.value.trim(),
-            dateAdded: new Date().toISOString()
+            dateAdded: new Date().toISOString(),
+            cover: coverImage.src
         };
         
         // Check if ID already exists (except when it's auto-generated)
@@ -122,10 +149,11 @@ function loadBooks() {
     books.forEach(book => {
       const card = document.createElement("div");
       card.classList.add("book-card");
+      const userJson = localStorage.getItem("user");
 
-      card.innerHTML = `
-        <img src="${book.cover}" alt="Book Cover" class="book-img">
-        <a href="preview.html" class="book-overlay">
+      const userPreview = `
+      <img src="${book.cover}" alt="Book Cover" class="book-img">
+        <a href="preview.html?id=${book.id}" class="book-overlay">
           <div class="book-header">
             <div class="left">
               <h3>${book.title}</h3>
@@ -139,6 +167,42 @@ function loadBooks() {
           <p class="description">Description: ${book.description}</p>
         </a>
       `;
+
+      const adminPreview = `
+      <img src="${book.cover}" alt="Book Cover" class="book-img">
+        <a href="previewEdit.html?id=${book.id}" class="book-overlay">
+          <div class="book-header">
+            <div class="left">
+              <h3>${book.title}</h3>
+              <p class="author">${book.author}</p>
+            </div>
+            <div class="right">
+              <span class="status ${book.status}">${book.status}</span>
+              <span class="category"><i class='bx bx-purchase-tag'></i>${book.category}</span>
+            </div>
+          </div>
+          <p class="description">Description: ${book.description}</p>
+        </a>
+      `;
+
+      if (!userJson) {
+        card.innerHTML = userPreview;
+      } 
+      else {
+        try {
+            const { username, role } = JSON.parse(userJson);
+            if (role === "admin") {
+                card.innerHTML = adminPreview;
+            } else {
+                card.innerHTML = userPreview;
+            }
+        } catch (e) {
+            console.error("Invalid user data in storage:", e);
+            nav.innerHTML = anonNav;
+        }
+      }
+
+    
       bookContainer.appendChild(card);
     });
   }
