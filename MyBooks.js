@@ -154,6 +154,14 @@ document.addEventListener("DOMContentLoaded", () => {
             filterMenu.style.display = filterMenu.style.display === "none" ? "block" : "none";
         });
 
+        // Close dropdown when clicking outside
+        const filter = document.querySelector(".filter");
+        document.addEventListener('click', (e) => {
+            if (!filter.contains(e.target) && !filterMenu.contains(e.target)) {
+                filterMenu.style.display = "none";
+            }
+        });
+
         // Filter menu options
         filterMenu.querySelectorAll("div").forEach(option => {
             option.addEventListener("click", () => {

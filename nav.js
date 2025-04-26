@@ -62,9 +62,9 @@ window.addEventListener("DOMContentLoaded", () => {
           </div>
           <!-- Dropdown Menu -->
           <div id="profile-dropdown" class="dropdown-menu hidden">
-              <a href="user-profile.html">View Profile</a>
-              <a href="#" id="logout-btn">Logout</a>
-          </div>
+		  	<a href="user-profile.html">View Profile</a>
+		  	<a href="#" id="logout-btn">Logout</a>
+	  	</div>
         </li>
       </ul>
     `;

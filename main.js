@@ -218,6 +218,16 @@ document.addEventListener("DOMContentLoaded", function () {
         filterIcon.addEventListener("click", () => {
             filterMenu.style.display = (filterMenu.style.display === "none") ? "block" : "none";
         });
+
+        // Close dropdown when clicking outside
+        const filter = document.querySelector(".filter");
+        const filterBox = document.getElementById("filterMenu");
+        document.addEventListener('click', (e) => {
+            if (!filter.contains(e.target) && !filterBox.contains(e.target)) {
+                filterMenu.style.display = "none";
+            }
+        });
+
     
         // Add click listeners for each filter choice
         filterMenu.addEventListener("click", function (e) {

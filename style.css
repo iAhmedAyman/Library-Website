@@ -94,7 +94,6 @@ button, a, .edit-overlay {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
     background-color: #f1f5fc;
     display: flex;
     align-items: center;
@@ -276,6 +275,10 @@ to {
     flex-direction: column;
     min-width: 150px;
     z-index: 1000;
+}
+
+#profile .dropdown-menu a {
+    width: auto;
 }
 
 .dropdown-menu a {
@@ -494,17 +497,6 @@ to {
 
 .gray-button:active {
     background-color: #cfd9eb;
-}
-/* ----------------------------- */
-
-/* ----------Flag and Category---------- */
-.flag-categ > :first-child {
-    display: inline-block;
-    background-color: #198754;
-    border-radius: 50px;
-    color: white;
-    text-align: center;
-    padding: 0.3rem;
 }
 /* ----------------------------- */
 
@@ -1009,13 +1001,20 @@ span {
     background-color: #384cba;
 }
 
+/* ----------------------------- */
+
 .filter-menu {
     position: absolute;
+    top: 6rem;
+    right: 12rem; 
     background: white;
-    border: 1px solid #000000;
-    margin-top: 5px;
-    padding: 5px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
     z-index: 1000;
 }
 
@@ -1031,11 +1030,16 @@ span {
 .barrowedFilter-menu,
 .favouriteSilter-menu {
     position: absolute;
+    top: 6rem;
+    right: 12rem; 
     background: white;
-    border: 1px solid #000000;
-    margin-top: 5px;
-    padding: 5px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
     z-index: 1000;
 }
 
