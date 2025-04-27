@@ -1,3 +1,8 @@
+// Set max length constraints
+const MAX_TITLE_LENGTH = 50;
+const MAX_AUTHOR_LENGTH = 40;
+const MIN_DESCRIPTION_LENGTH = 20;
+
 // Cover
 const coverOverlay = document.querySelector('#cover-preview .edit-overlay');
 const fileInput = document.getElementById('cover-upload');
@@ -30,11 +35,11 @@ const authorOverlay = document.getElementById('author-edit');
 const authorElement = document.querySelector('.name-title .edit-info p');
 
 titleOverlay.addEventListener('click', () => {
-    makeEditable(titleElement, titleOverlay);
+    makeEditable(titleElement, titleOverlay, MAX_TITLE_LENGTH);
 });
 
 authorOverlay.addEventListener('click', () => {
-    makeEditable(authorElement, authorOverlay);
+    makeEditable(authorElement, authorOverlay, MAX_AUTHOR_LENGTH);
 });
 
 // CATEGORY Inline Editing
@@ -42,7 +47,7 @@ const categoryOverlay = document.querySelector('.flag-categ .edit-info .edit-ove
 const categoryElement = document.querySelector('.flag-categ .category');
 
 categoryOverlay.addEventListener('click', () => {
-    makeEditable(categoryElement, categoryOverlay, true);
+    makeEditable(categoryElement, categoryOverlay, MAX_TITLE_LENGTH, true);
 });
 
 // description Inline Editing
@@ -50,11 +55,11 @@ const descriptionOverlay = document.querySelector('.description .edit-info .edit
 const descriptionElement = document.getElementById('description-preview');
 
 descriptionOverlay.addEventListener('click', () => {
-    makeEditable(descriptionElement, descriptionOverlay);
+    makeEditable(descriptionElement, descriptionOverlay, MIN_DESCRIPTION_LENGTH);
 });
 
 // Function to turn an element into an input field
-function makeEditable(element, overlay, hasIcon = false) {
+function makeEditable(element, overlay, limit, hasIcon = false) {
     const oldValue = hasIcon ? element.innerText.trim().replace(/^.*?\s/, '') : element.innerText.trim(); 
     
     if (element.id === 'description-preview') {
@@ -80,6 +85,10 @@ function makeEditable(element, overlay, hasIcon = false) {
     input.style.margin = computedStyle.margin;
     input.style.width = computedStyle.width;
     input.style.height = computedStyle.height;
+    
+    if (element.id != 'description-preview') {
+        input.setAttribute('maxlength', limit);
+    }
 
 
     element.replaceWith(input);
@@ -101,6 +110,15 @@ function makeEditable(element, overlay, hasIcon = false) {
 
 function saveInput(input, originalElement, hasIcon = false) {
     let newValue = input.value.trim();
+
+    // Minimum length check for description
+    if (originalElement.id === 'description-preview' && newValue.length < MIN_DESCRIPTION_LENGTH) {
+        showFeedback(`Description must be at least ${MIN_DESCRIPTION_LENGTH} characters.`, false)
+        input.replaceWith(originalElement);
+        input.focus();
+        return;
+    }
+
     if (newValue !== "") {
         if (hasIcon) {
             originalElement.innerHTML = `<i class='bx bx-purchase-tag'></i>${newValue}`;
@@ -141,5 +159,32 @@ deleteButton.addEventListener('click', function() {
     books = books.filter(book => book.id !== bookId); // delete the book with matching ID
 
     localStorage.setItem('books', JSON.stringify(books));
-    window.location.href = "booksAdd.html"; 
+    window.location.href = "books.html"; 
 });
+
+ // Function to show feedback
+ function showFeedback(message, isSuccess = true) {
+    // Create a feedback element if it doesn't exist
+    let feedback = document.getElementById('feedback-message');
+    if (!feedback) {
+        feedback = document.createElement('div');
+        feedback.id = 'feedback-message';
+        document.querySelector('.vertical-flex').appendChild(feedback);
+    }
+    
+    // Style based on success or failure
+    feedback.style.padding = '10px';
+    feedback.style.marginTop = '10px';
+    feedback.style.borderRadius = '4px';
+    feedback.style.backgroundColor = isSuccess ? '#d4edda' : '#f8d7da';
+    feedback.style.color = isSuccess ? '#155724' : '#721c24';
+    
+    feedback.textContent = message;
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        feedback.style.display = 'none';
+    }, 3000);
+    
+    feedback.style.display = 'block';
+}

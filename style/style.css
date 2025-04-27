@@ -358,12 +358,47 @@ to {
 }
 /* ----------------------------- */
 
+/* ----------Availability/Category Preview---------- */
+.available-preview {
+    display: inline-block;
+    background-color: #198754;
+    border-radius: 50px;
+    color: white;
+    text-align: center;
+    padding: 0.3rem;
+    max-width: 4rem;
+}
+
+.borrowed-preview {
+    display: inline-block;
+    background-color: #e53935;
+    border-radius: 50px;
+    color: white;
+    text-align: center;
+    padding: 0.3rem;
+    max-width: 4rem;
+}
+
+#category {
+    margin: 0;
+    display: flex;
+    justify-content: right;
+}
+
+.availability-wrapper {
+    display: flex;
+    justify-content: flex-end; /* Push span to the right */
+    width: 100%; /* Make wrapper full width */
+}
+/* ----------------------------- */
+
 /* ----------Edit Book---------- */
 .edit-info {
     position: relative;
     display: inline-block;
-    padding: 8px;
+    padding: 5px;
     border-radius: 6px;
+    max-width: 30rem;
 }
 
 .edit-overlay {
@@ -513,7 +548,7 @@ to {
 
 .carousel-track {
     display: flex;
-    animation: slideHero 20s infinite;
+    animation: slideHero 25s infinite;
     width: 300%;
     transition: transform 1s ease;
 }
@@ -804,6 +839,11 @@ p, h1, h2, h3, h4, h5, h6 {
     margin-left: auto;
     user-select: none;
 }
+
+.filter div{
+    font-size: 20px;
+}
+
 .box{
     width: 200px;
     height: 2px;
@@ -1028,7 +1068,7 @@ span {
 }
 
 .barrowedFilter-menu,
-.favouriteSilter-menu {
+.favouriteFilter-menu {
     position: absolute;
     top: 6rem;
     right: 12rem; 
@@ -1044,13 +1084,13 @@ span {
 }
 
 .barrowedFilter-menu div,
-.favouriteSilter-menu div {
+.favouriteFilter-menu div {
     padding: 5px 10px;
     cursor: pointer;
 }
 
 .barrowedFilter-menu div:hover,
-.favouriteSilter-menu div:hover {
+.favouriteFilter-menu div:hover {
     background-color: #f0f0f0;
 }
 

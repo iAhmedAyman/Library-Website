@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Edit</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"> <!--Font-->
 </head>
@@ -13,10 +13,10 @@
         <!-- Navigation Bar -->
         <nav>
             <ul id="navBar">
-                <li id="logo"><img src="logo.png" alt="logo"></li>
+                <li id="logo"><img src="images/logo.png" alt="logo"></li>
                 <li id="pages">
                     <a href="homepage.html" id = "home">Home</a>
-                    <a href="booksAdd.html" id = "books">Books</a>
+                    <a href="books.html" id = "books">Books</a>
                     <a href="About-us.html" id = "about-us">About Us</a>
                 </li>
                 <li id="profile">
@@ -40,7 +40,7 @@
                 <tr>
                     <!-- Left Side: Book Details -->
                     <td>
-                        <div class="horizontal-flex space-between">
+                        <div class="horizontal-flex space-between" style="max-width: 30rem;">
                             <!--Editable Title and Author Name-->
                             <div class="name-title">
                                 <div class="edit-info">
@@ -57,10 +57,12 @@
                                 </div>
                             </div>
                             <div class="flag-categ vertical-flex">
-                                <span id="availability">Available</span>
+                                <div class="availability-wrapper">
+                                    <span id="availability">Available</span>
+                                </div>
                                 <!--Editable Category-->
                                 <div class="edit-info" style="margin: 0;">
-                                    <span class="category"><i class='bx bx-purchase-tag'></i>Category</span>
+                                    <span id="category" class="category"><i class='bx bx-purchase-tag'></i>Category</span>
                                     <div class="edit-overlay small-edit round-edit">
                                         <i class="bx bxs-edit"></i>
                                     </div>
@@ -84,7 +86,7 @@
                     <!-- Right Side: Book Cover -->
                     <td id="cover-preview" class="horizontal-center">
                         <input type="file" id="cover-upload" accept="image/*" style="display: none;">
-                        <img id="cover" src="Cover.png" alt="Book Cover">
+                        <img id="cover" src="images/Cover.png" alt="Book Cover">
                         <div class="edit-overlay">
                             <i class="bx bxs-edit"></i>
                         </div>
@@ -93,8 +95,8 @@
             </table>
         </div>
     </main>
-    <script src="nav.js"></script>
-    <script src="preview.js"></script>
-    <script src="previewEdit.js"></script>
+    <script src="script/nav.js"></script>
+    <script src="script/preview.js"></script>
+    <script src="script/previewEdit.js"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url(img2.png) no-repeat;
+    background: url(../images/img3.png) no-repeat;
     background-size: cover;
     background-position: center;
     .Sign-in {
@@ -171,7 +171,7 @@ body {
         margin: 20px 0 15px;
     }
     .register-link p a {
-        color: rgb(0, 0, 0);
+        color: #465fe9;
         text-decoration: none;
         font-weight: 600;
     }

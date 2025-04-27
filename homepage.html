@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Home</title>
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="style/style.css">
 		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 		<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"> <!--Font-->
 	</head>
@@ -13,7 +13,7 @@
 			<!-- Navigation Bar -->
 			<nav>
 				<ul id="navBar">
-					<li id="logo"><img src="logo.png" alt="logo"></li>
+					<li id="logo"><img src="images/logo.png" alt="logo"></li>
 					<li id="pages">
 						<a href="homepage.html" id = "home">Home</a>
 						<a href="books.html" id = "books">Books</a>
@@ -27,8 +27,7 @@
 			</nav>
 		</header>
 		<div class="main-panel vertical-center" style="min-height: 40vh; margin-bottom: 10rem;">
-			<div class="horizontal-flex horizontal-center vertical-center space-between">
-				<button class="arrow-button" id="prev-button">&lt;</button>
+			<div class="horizontal-flex horizontal-center vertical-center">
 				<!--Carousel-->
 				<section class="hero-carousel">
 					<div class="carousel-track">
@@ -66,7 +65,6 @@
 						</div>
 					</div>
 				</section>
-				<button class="arrow-button" id="next-button">&gt;</button>
 			</div>
 			<div class="horizontal-flex">
 				<a href="sign-up.html"><button class="blue-button" id="box-button-prev" style="margin-right: 1rem; width: 6rem;">Get Started</button></a>
@@ -134,6 +132,7 @@
 				</div>
 			</div>
 		</div>
-	<script src="nav.js"></script>   
+	<script src="script/nav.js"></script> 
+	<script src="script/main.js"></script>   
   	</body>
 </html>
