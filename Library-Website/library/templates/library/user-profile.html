@@ -9,7 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"> <!--Font-->
 </head>
-<body>
+<body data-user="{{ user.username }}" data-role="{{ user.role }}">
     <!-- Navigation Bar -->
     <nav>
         <ul id="navBar">
@@ -31,61 +31,67 @@
             </li>
         </ul>
     </nav>
-    <nav></nav>
     <div class = "main-panel">
-        <form action="" id="profile-form">
-            <!--Username, user and icon-->
-            <h0> <i class='bx bx-user-circle'></i></h0>
+        <form method="post" id="profile-form">
+            {% csrf_token %}
+            
             <div class="name-title horizontal-center">
-                <h2>Username</h2>
-                <h3>User</h3>
+                <h2>{{ user.username }}</h2>
+                <h3>{{ user.get_role_display }}</h3>
             </div>
-            <!--First name and last name-->
+        
+            <!-- Profile Update Section -->
             <div class="Name horizontal-flex vertical-center">
-                <!--Column for the email and first name inputs-->
                 <div class="vertical-flex">
                     <div class="input-section">
-                        <label for="First name">First name</label>
-                        <input  type="text" placeholder="Your name"
-                        required>
+                        <label for="first_name">First name</label>
+                        <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="Your name" required>
                     </div>
-                    <!--Email-->
-                    <div class="center-non">
-                     <div class="input-section">
-                            <label for="email">Email</label>
-                            <input  type="text" placeholder="Examble@gmail.com"
-                            required>
-                        </div>
+                    <div class="input-section">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" value="{{ user.email }}" placeholder="Example@gmail.com" required>
                     </div>
                 </div>
-                <!--Last name input-->
                 <div class="input-section">
-                    <label for="Last name">Last name</label>
-                    <input  type="text" placeholder="Your last name">
+                    <label for="last_name">Last name</label>
+                    <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="Your last name">
                 </div>
-
             </div>
-            <button type="button" class="update-profile blue-button" style="width: 12rem;"> Update Profile</button>
-            
-            <!--Password-->
+        
+            <!-- Submit button for profile update -->
+            <button type="submit" name="update_profile" class="update-profile blue-button" style="width: 12rem;">
+                Update Profile
+            </button>
+        
             <h2>Password</h2>
+        
+            <!-- Password Update Section -->
             <div class="Password horizontal-flex vertical-center">
                 <div class="input-section">
-                    <label for="password">Current password</label>
-                    <input  type="password" placeholder="Password"
-                    required>
+                    <label for="current_password">Current password</label>
+                    <input type="password" name="current_password" placeholder="Password">
                 </div>
                 <div class="input-section">
-                    <label for="password">New password</label>
-                    <input  type="password" placeholder="Password"
-                    required>
-                </div>  
+                    <label for="new_password">New password</label>
+                    <input type="password" name="new_password" placeholder="Password">
+                </div>
             </div>
-            
-            <button type="submit" class="update-pw blue-button" style="width: 8rem;"> Update Password</button>
-        </form>
+        
+            <!-- Submit button for password update -->
+            <button type="submit" name="update_password" class="update-pw blue-button" style="width: 8rem;">
+                Update Password
+            </button>
+        
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message-container {% if message.tags %}{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </form>             
     </div>
     <script src="{% static 'script/nav.js' %}"></script>
-    <script src="{%static 'script/profile.js' %}"></script>
+    <!-- <script src="{%static 'script/profile.js' %}"></script> -->
 </body>
 </html>

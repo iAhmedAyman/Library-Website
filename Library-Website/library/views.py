@@ -1,17 +1,17 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import AllBooksForm
-from .models import AllBooks, BorrowedBook, FavouriteBook, Users
+from .models import AllBooks, Users
 from django.http import JsonResponse
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
-from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_exempt
-import json
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
+from django.http import JsonResponse
 
 def homepage(request):
     user = None
@@ -102,13 +102,6 @@ def add_book(request):
 
 @csrf_protect
 def preview_edit(request, book_id):
-    user_id = request.session.get('user_id')
-    user = Users.objects.filter(id=user_id).first()
-
-    if not user or user.role != 'admin':
-        return redirect('preview_book', book_id=book_id)
-
-
     book = get_object_or_404(AllBooks, id=book_id)
 
     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
@@ -124,8 +117,8 @@ def preview_edit(request, book_id):
     form = AllBooksForm(instance=book)
     return render(request, 'library/previewEdit.html', {'form': form, 'book': book})
 
-def preview(request, book_id):
-    book = get_object_or_404(AllBooks, id=book_id)
+def preview(request, id):
+    book = get_object_or_404(AllBooks, id=id)
     return render(request, 'library/preview.html', {'book': book})
 
 def delete_book(request, book_id):
@@ -139,55 +132,36 @@ def about_us(request):
     return render(request, 'library/about-us.html')
 
 def user_profile(request):
-    return render(request, 'library/user-profile.html')
+    user_id = request.session.get('user_id')
+    user = get_object_or_404(Users, id=user_id)
+
+    if request.method == 'POST':
+        if 'update_profile' in request.POST:
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            email = request.POST.get('email')
+
+            user.username = f"{first_name} {last_name}"
+            user.email = email
+            user.save()
+
+            messages.success(request, 'Profile updated successfully.')
+
+        elif 'update_password' in request.POST:
+            current_password = request.POST.get('current_password')
+            new_password = request.POST.get('new_password')
+
+            if check_password(current_password, user.password):
+                user.password = make_password(new_password)
+                user.save()
+                messages.success(request, 'Password updated successfully.')
+            else:
+                messages.error(request, 'Current password is incorrect.')
+
+        return redirect('user_profile')
+
+    return render(request, 'library/user-profile.html', {'user': user})
 
 def log_out(request):
     request.session.flush()
     return redirect('sign-in') 
-
-
-@csrf_exempt
-@require_POST
-def toggle_borrow_book(request):
-    data = json.loads(request.body)
-    user_id = data.get('user_id')
-    book_id = data.get('book_id')
-
-    try:
-        user = Users.objects.get(id=user_id)
-        book = AllBooks.objects.get(id=book_id)
-
-        borrowed, created = BorrowedBook.objects.get_or_create(user=user, book=book)
-        if not created:
-            borrowed.delete()
-            book.book_status = 'available'
-            book.save()
-            return JsonResponse({'status': 'returned'})
-        else:
-            book.book_status = 'borrowed'
-            book.save()
-            return JsonResponse({'status': 'borrowed'})
-
-    except (Users.DoesNotExist, AllBooks.DoesNotExist):
-        return JsonResponse({'error': 'Invalid user or book'}, status=400)
-
-@csrf_exempt
-@require_POST
-def toggle_favourite_book(request):
-    data = json.loads(request.body)
-    user_id = data.get('user_id')
-    book_id = data.get('book_id')
-
-    try:
-        user = Users.objects.get(id=user_id)
-        book = AllBooks.objects.get(id=book_id)
-
-        fav, created = FavouriteBook.objects.get_or_create(user=user, book=book)
-        if not created:
-            fav.delete()
-            return JsonResponse({'status': 'unfavourited'})
-        else:
-            return JsonResponse({'status': 'favourited'})
-
-    except (Users.DoesNotExist, AllBooks.DoesNotExist):
-        return JsonResponse({'error': 'Invalid user or book'}, status=400)

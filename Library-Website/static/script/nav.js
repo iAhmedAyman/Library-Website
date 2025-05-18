@@ -1,101 +1,86 @@
 window.addEventListener("DOMContentLoaded", () => {
   const nav = document.querySelector("nav");
-  let userJson = localStorage.getItem("user");
+  const body = document.querySelector("body");
 
-  if (!userJson) {
-      const body = document.querySelector("body");
-      const username = body.getAttribute("data-user");
-      const role = body.getAttribute("data-role");
-
-      if (username && role) {
-          const user = { username, role, isSignedIn: true };
-          localStorage.setItem("user", JSON.stringify(user));
-          userJson = JSON.stringify(user);
-      }
-  }
+  const username = body.getAttribute("data-user");
+  const role = body.getAttribute("data-role");
 
   const anonNav = `
-    <ul id="navBar">
-      <li id="logo"><img src="/static/images/logo.png" alt="logo"></li>
-      <li id="pages">
-        <a href="/homepage/" id="home">Home</a>
-        <a href="/books/" id="books">Books</a>
-        <a href="/about/" id="about-us">About Us</a>
-      </li>
-      <li id="profile">
-        <a href="/sign-up/" id="profile-sign-up">Sign Up</a>
-        <a href="/sign-in/" id="profile-sign-in">Sign In</a>
-      </li>
-    </ul>
+      <ul id="navBar">
+          <li id="logo"><img src="/static/images/logo.png" alt="logo"></li>
+          <li id="pages">
+              <a href="/homepage/" id="home">Home</a>
+              <a href="/books/" id="books">Books</a>
+              <a href="/about/" id="about-us">About Us</a>
+          </li>
+          <li id="profile">
+              <a href="/sign-up/" id="profile-sign-up">Sign Up</a>
+              <a href="/sign-in/" id="profile-sign-in">Sign In</a>
+          </li>
+      </ul>
   `;
 
   const adminNav = (username) => `
-    <ul id="navBar">
-      <li id="logo"><img src="/static/images/logo.png" alt="logo"></li>
-      <li id="pages">
-        <a href="/homepage/" id="home">Home</a>
-        <a href="/books/" id="books">Books</a>
-        <a href="/about/" id="about-us">About Us</a>
-      </li>
-      <li id="profile">
-        <div id="profile-img">
-          <h1><i class='bx bx-user-circle'></i></h1>
-          <div class="name-title">
-            <h5>${username}</h5>
-            <h6>Admin</h6>
-          </div>
-        </div>
-      </li>
-    </ul>
-    <div id="profile-dropdown" class="dropdown-menu hidden">
-      <a href="/user-profile/">View Profile</a>
-      <a href="#" id="logout-btn">Logout</a>
-    </div>
+      <ul id="navBar">
+          <li id="logo"><img src="/static/images/logo.png" alt="logo"></li>
+          <li id="pages">
+              <a href="/homepage/" id="home">Home</a>
+              <a href="/books/" id="books">Books</a>
+              <a href="/about/" id="about-us">About Us</a>
+          </li>
+          <li id="profile">
+              <div id="profile-img">
+                  <h1><i class='bx bx-user-circle'></i></h1>
+                  <div class="name-title">
+                      <h5>${username}</h5>
+                      <h6>Admin</h6>
+                  </div>
+              </div>
+              <div id="profile-dropdown" class="dropdown-menu hidden">
+                  <a href="/user-profile/">View Profile</a>
+                  <a href="#" id="logout-btn">Logout</a>
+              </div>
+          </li>
+      </ul>
   `;
 
   const userNav = (username) => `
-    <ul id="navBar">
-      <li id="logo"><img src="/static/images/logo.png" alt="logo"></li>
-      <li id="pages">
-        <a href="/homepage/" id="home">Home</a>
-        <a href="/books/" id="books">Books</a>
-        <a href="/my-books/" id="my-books">My Books</a>
-        <a href="/about/" id="about-us">About Us</a>
-      </li>
-      <li id="profile">
-        <div id="profile-img">
-          <h1><i class='bx bx-user-circle'></i></h1>
-          <div class="name-title">
-            <h5>${username}</h5>
-            <h6>User</h6>
-          </div>
-        </div>
-        <div id="profile-dropdown" class="dropdown-menu hidden">
-          <a href="/user-profile/">View Profile</a>
-          <a href="#" id="logout-btn">Logout</a>
-        </div>
-      </li>
-    </ul>
+      <ul id="navBar">
+          <li id="logo"><img src="/static/images/logo.png" alt="logo"></li>
+          <li id="pages">
+              <a href="/homepage/" id="home">Home</a>
+              <a href="/books/" id="books">Books</a>
+              <a href="/my-books/" id="my-books">My Books</a>
+              <a href="/about/" id="about-us">About Us</a>
+          </li>
+          <li id="profile">
+              <div id="profile-img">
+                  <h1><i class='bx bx-user-circle'></i></h1>
+                  <div class="name-title">
+                      <h5>${username}</h5>
+                      <h6>User</h6>
+                  </div>
+              </div>
+              <div id="profile-dropdown" class="dropdown-menu hidden">
+                  <a href="/user-profile/">View Profile</a>
+                  <a href="#" id="logout-btn">Logout</a>
+              </div>
+          </li>
+      </ul>
   `;
 
-  // Build nav bar based on user role
-  if (!userJson) {
-      nav.innerHTML = anonNav;
-  } else {
-      try {
-          const { username, role } = JSON.parse(userJson);
-          if (role === "admin") {
-              nav.innerHTML = adminNav(username);
-          } else {
-              nav.innerHTML = userNav(username);
-          }
-      } catch (e) {
-          console.error("Invalid user data in storage:", e);
-          nav.innerHTML = anonNav;
+  // Choose nav layout based on role
+  if (username && role) {
+      if (role === "admin") {
+          nav.innerHTML = adminNav(username);
+      } else {
+          nav.innerHTML = userNav(username);
       }
+  } else {
+      nav.innerHTML = anonNav;
   }
 
-  // Dropdown toggle for profile menu
+  // Dropdown toggle
   document.addEventListener("click", (e) => {
       const profile = document.getElementById("profile-img");
       const dropdown = document.getElementById("profile-dropdown");
@@ -108,7 +93,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
   });
 
-  // Logout confirmation and clearing user data
+  // Logout button logic
   const logoutBtn = document.getElementById('logout-btn');
   if (logoutBtn) {
       logoutBtn.addEventListener('click', (e) => {
@@ -142,12 +127,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
       document.body.appendChild(confirmBox);
 
-      document.getElementById('confirm-yes').addEventListener('click', function() {
-          localStorage.removeItem('user');
+      document.getElementById('confirm-yes').addEventListener('click', function () {
           window.location.href = '/log-out/';
       });
 
-      document.getElementById('confirm-no').addEventListener('click', function() {
+      document.getElementById('confirm-no').addEventListener('click', function () {
           confirmBox.remove();
       });
   }
