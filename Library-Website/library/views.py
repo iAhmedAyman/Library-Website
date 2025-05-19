@@ -6,8 +6,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
+
 
 # Create your views here.
 
@@ -68,10 +67,20 @@ def signin(request):
     return render(request, 'library/sign-in.html')
 
 def books(request):
-    return render(request, 'library/Books.html')
+    user = None
+    user_id = request.session.get('user_id')
+
+    if user_id:
+        try:
+            user = Users.objects.get(id=user_id)
+        except Users.DoesNotExist:
+            user = None
+
+    return render(request, 'library/Books.html', {'user': user})
 
 def my_books(request):
-    return render(request, 'library/MyBooks.html')
+
+    return render(request, 'library/Books.html')
 
 def api_books(request):
     books = AllBooks.objects.all()
@@ -90,6 +99,15 @@ def api_books(request):
     return JsonResponse(data, safe=False)
 
 def add_book(request):
+    user = None
+    user_id = request.session.get('user_id')
+
+    if user_id:
+        try:
+            user = Users.objects.get(id=user_id)
+        except Users.DoesNotExist:
+            user = None
+
     if request.method == 'POST':
         form = AllBooksForm(request.POST, request.FILES)
         if form.is_valid():
@@ -129,38 +147,14 @@ def delete_book(request, book_id):
     return render(request, 'library/confirm_delete.html', {'book': book})
 
 def about_us(request):
+    
+
     return render(request, 'library/about-us.html')
 
+
 def user_profile(request):
-    user_id = request.session.get('user_id')
-    user = get_object_or_404(Users, id=user_id)
 
-    if request.method == 'POST':
-        if 'update_profile' in request.POST:
-            first_name = request.POST.get('first_name')
-            last_name = request.POST.get('last_name')
-            email = request.POST.get('email')
-
-            user.username = f"{first_name} {last_name}"
-            user.email = email
-            user.save()
-
-            messages.success(request, 'Profile updated successfully.')
-
-        elif 'update_password' in request.POST:
-            current_password = request.POST.get('current_password')
-            new_password = request.POST.get('new_password')
-
-            if check_password(current_password, user.password):
-                user.password = make_password(new_password)
-                user.save()
-                messages.success(request, 'Password updated successfully.')
-            else:
-                messages.error(request, 'Current password is incorrect.')
-
-        return redirect('user_profile')
-
-    return render(request, 'library/user-profile.html', {'user': user})
+    return render(request, 'library/user-profile.html')
 
 def log_out(request):
     request.session.flush()
