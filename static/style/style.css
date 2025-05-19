@@ -1043,55 +1043,134 @@ span {
 
 /* ----------------------------- */
 
+
+/* ----------Filter---------- */
+/* ----------Filter Menu---------- */
 .filter-menu {
     position: absolute;
-    top: 6rem;
-    right: 12rem; 
+    top: 100%;
+    right: 0; 
+    margin-top: 5px;
     background: white;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    padding: 0.5rem 0;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    min-width: 150px;
+    min-width: 180px;
     z-index: 1000;
+    font-family: sans-serif;
 }
 
 .filter-menu div {
-    padding: 5px 10px;
+    padding: 10px 16px;
     cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    color: #333;
 }
 
 .filter-menu div:hover {
-    background-color: #f0f0f0;
+    background-color: #f6f8ff;
+    color: #4a67ff;
 }
 
-.barrowedFilter-menu,
-.favouriteFilter-menu {
-    position: absolute;
-    top: 6rem;
-    right: 12rem; 
+.filter-menu div:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* ----------Filter Popup---------- */
+#filterPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: white;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    padding: 0.5rem 0;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    min-width: 150px;
-    z-index: 1000;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+    display: none;
+    width: 320px;
+    max-width: 90vw;
+    font-family: sans-serif;
 }
 
-.barrowedFilter-menu div,
-.favouriteFilter-menu div {
-    padding: 5px 10px;
+#filterLabel {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 12px;
+    display: block;
+}
+
+#filterPopup input,
+#filterPopup select {
+    width: 100%;
+    padding: 10px 12px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border 0.2s ease;
+}
+
+#filterPopup input:focus,
+#filterPopup select:focus {
+    border-color: #4a67ff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 103, 255, 0.1);
+}
+
+#applyFilter {
+    background-color: #4a67ff;
+    color: white;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    width: 100%;
+    transition: background 0.2s ease;
 }
 
-.barrowedFilter-menu div:hover,
-.favouriteFilter-menu div:hover {
-    background-color: #f0f0f0;
+#applyFilter:hover {
+    background-color: #3d54cc;
 }
 
+#closePopup {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.2s ease;
+    line-height: 1;
+}
+
+#closePopup:hover {
+    color: #333;
+}
+
+/* Filter icon styling */
+.filter {
+    position: relative;
+    display: inline-block;
+}
+
+#filterIcon {
+    font-size: 22px;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s ease;
+    padding: 8px;
+}
+
+#filterIcon:hover {
+    color: #4a67ff;
+}
 /* ----------------------------- */

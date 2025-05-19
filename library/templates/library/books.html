@@ -36,17 +36,30 @@
             <h1 style="padding-left: 20px;">Books</h1>
             
             <div class="filter">
-                <i1 id="filterIcon" class='bx bx-filter'></i1>
+                <i id="filterIcon" class='bx bx-filter'></i>
                 <div id="filterMenu" class="filter-menu" style="display: none;">
-                    <div data-filter-type="category">Filter by Category</div>
-                    <div data-filter-type="author">Filter by Author</div>
-                    <div data-filter-type="availability">Filter by Availability</div>
+                    <div class="filter-option" data-filter-type="category">Filter by Category</div>
+                    <div class="filter-option" data-filter-type="author">Filter by Author</div>
+                    <div class="filter-option" data-filter-type="availability">Filter by Availability</div>
                 </div>
             </div>
 
             <div class="box">
                 <i class='bx bx-search'></i>
                 <input type="text" id="searchInput" name="" placeholder="Search">
+            </div>
+
+            <!-- Filter Popup -->
+            <div id="filterPopup">
+                <span id="closePopup">&times;</span>
+                <div id="filterLabel" style="margin-bottom: 5px;">Filter:</div>
+                <input type="text" id="popupInput" placeholder="Enter value" />
+                <select id="popupSelect" style="display: none;">
+                    <option value="" disabled selected>Select availability</option>
+                    <option value="available">Available</option>
+                    <option value="borrowed">Borrowed</option>
+                </select>
+                <button id="applyFilter">Apply Filter</button>
             </div>
         </div>
         
