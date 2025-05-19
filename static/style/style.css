@@ -1045,7 +1045,8 @@ span {
 
 
 /* ----------Filter---------- */
-/* ----------Filter Menu---------- */
+.barrowedFilter-menu,
+.favouriteFilter-menu,
 .filter-menu {
     position: absolute;
     top: 100%;
@@ -1063,6 +1064,8 @@ span {
     font-family: sans-serif;
 }
 
+.barrowedFilter-menu div,
+.favouriteFilter-menu div,
 .filter-menu div {
     padding: 10px 16px;
     cursor: pointer;
@@ -1071,13 +1074,39 @@ span {
     color: #333;
 }
 
+.barrowedFilter-menu div:hover,
+.favouriteFilter-menu div:hover,
 .filter-menu div:hover {
     background-color: #f6f8ff;
     color: #4a67ff;
 }
 
+.barrowedFilter-menu div:not(:last-child),
+.favouriteFilter-menu div:not(:last-child),
 .filter-menu div:not(:last-child) {
     border-bottom: 1px solid #f0f0f0;
+}
+
+/* ----------Filter Container---------- */
+.filter {
+    position: relative;
+    display: inline-block;
+}
+
+#filterIcon,
+#barrowedFilterIcon,
+#favouriteFilterIcon {
+    font-size: 22px;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s ease;
+    padding: 8px;
+}
+
+#filterIcon:hover,
+#barrowedFilterIcon:hover,
+#favouriteFilterIcon:hover {
+    color: #4a67ff;
 }
 
 /* ----------Filter Popup---------- */
@@ -1172,5 +1201,48 @@ span {
 
 #filterIcon:hover {
     color: #4a67ff;
+}
+
+.barrowedFilter-menu,
+.favouriteFilter-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 5px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    display: none;
+    flex-direction: column;
+    min-width: 180px;
+    z-index: 1000;
+    font-family: sans-serif;
+}
+
+.barrowedFilter-menu div,
+.favouriteFilter-menu div {
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    color: #333;
+}
+
+.barrowedFilter-menu div:hover,
+.favouriteFilter-menu div:hover {
+    background-color: #f6f8ff;
+    color: #4a67ff;
+}
+
+/* No results message */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 0;
+    font-size: 16px;
+    color: #666;
+    width: 100%;
 }
 /* ----------------------------- */
