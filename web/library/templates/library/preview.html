@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Preview</title>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+</head>
+<body data-book-id="{{ book.id }}">
+    <header>
+        <!-- Navigation Bar -->
+        <nav>
+            <ul id="navBar">
+                <li id="logo"><img src="{% static 'images/logo.png' %}" alt="logo"></li>
+                <li id="pages">
+                    <a href="homepage.html" id = "home">Home</a>
+                    <a href="books.html" id = "books">Books</a>
+                    <a href="MyBooks.html" id = "my-books">My Books</a>
+                    <a href="About-us.html" id = "about-us">About Us</a>
+                </li>
+                <li id="profile"> 
+                    <a href="user-profile.html" id="profile-img">
+                        <h1><i class='bx bx-user-circle'></i></h1>
+                        <div class="name-title">
+                            <h5>{{ request.user.username }}</h5>
+                            <h6>User</h6>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Book Preview Section -->
+    <main>
+        <div class="main-panel">
+            <table>
+                <tr>
+                    <!-- Left Side: Book Details -->
+                    <td>
+                        <div class="horizontal-flex space-between" style="max-width: 30rem;">
+                            <div class="name-title">
+                                <h1>{{ book.title }}</h1>
+                                <p>{{ book.author }}</p>
+                            </div>
+                            <div class="flag-categ vertical-flex">
+                                <div class="availability-wrapper">
+                                    <span id="availability" class="{% if book.book_status == 'Available' %}available-preview{% else %}borrowed-preview{% endif %}">
+                                        {{ book.book_status }}
+                                    </span>
+                                </div>
+                                <span id="category" class="category">
+                                    <i class='bx bx-purchase-tag'></i>{{ book.category }}
+                                </span>
+                            </div>
+                        </div>
+                        <p id="description-preview">
+                            {{ book.description }}
+                        </p>
+                        <div class="horizontal-flex">
+                            <button class="blue-button" id="borrow-btn" disabled>Borrow</button>
+                            <button id="favourite-btn" style="margin-left: 1rem; background: none; border: none; font-size: 2rem; color: #007bff;" disabled>
+                                <i id="favourite-icon" class='bx bx-star'></i>
+                            </button>                            
+                        </div>                          
+                    </td>
+
+                    <!-- Right Side: Book Cover -->
+                    <td id="cover-preview" class="horizontal-center">
+                        {% if book.cover %}
+                            <img id="cover" src="{{ book.cover.url }}" alt="Book Cover">
+                        {% else %}
+                            <img id="cover" src="{% static 'images/Cover.png' %}" alt="Default Cover">
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </main>
+
+    <script src="{% static 'script/nav.js' %}"></script>
+    <script src="{% static 'script/preview.js' %}"></script>
+</body>
+</html>
