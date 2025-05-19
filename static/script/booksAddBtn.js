@@ -1,29 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const userJson = localStorage.getItem("user");
+  const body = document.querySelector("body");
 
-    if (userJson) {
-        try {
-            const { username, role } = JSON.parse(userJson);
-            if (role === "admin") {
-                // Create <a> element
-                const addLink = document.createElement('a');
-                addLink.href = '/add_book/';
+  const username = body.getAttribute("data-user");
+  const role = body.getAttribute("data-role");
 
-                // Create <button> element
-                const addButton = document.createElement('button');
-                addButton.className = 'add-button';
-                addButton.textContent = '+';
+      try {
+          if (role === "admin") {
+              // Create <a> element
+              const addLink = document.createElement('a');
+              addLink.href = '/add_book/';
 
-                // Put the button inside the link
-                addLink.appendChild(addButton);
+              // Create <button> element
+              const addButton = document.createElement('button');
+              addButton.className = 'add-button';
+              addButton.textContent = '+';
 
-                // Append to container (or wherever you want it)
-                const container = document.querySelector('.container');
-                container.appendChild(addLink);
-            }
-            
-        } catch (e) {
-          console.error("Invalid user data in storage:", e);
-        }
-      } 
+              // Put the button inside the link
+              addLink.appendChild(addButton);
+
+              // Append to container (or wherever you want it)
+              const container = document.querySelector('.container');
+              container.appendChild(addLink);
+          }
+          
+      } catch (e) {
+        console.error("Invalid user data in storage:", e);
+      }
 });
