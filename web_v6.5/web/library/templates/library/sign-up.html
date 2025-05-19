@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign up Form</title>
+  <link rel="stylesheet" href="{% static 'style/style2.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="Sign-up">
+    <form id="signup-form" method="POST" action="{% url 'signup' %}">
+      {% csrf_token %}
+      <h1>Sign up</h1>
+
+      <!-- Username -->
+      <div class="input-box">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" placeholder="Your Username" required value="{{ request.POST.username|default:'' }}" />
+      </div>
+
+      <!-- Email -->
+      <div class="input-box">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="Your Email" required value="{{ request.POST.email|default:'' }}" />
+      </div>
+
+      <!-- Password -->
+      <div class="input-box">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="Your Password" required />
+      </div>
+
+      <!-- Confirm Password (not handled by model, can validate with JS) -->
+      <div class="input-box">
+        <label for="confirm">Confirm password</label>
+        <input id="confirm" type="password" placeholder="Confirm Your Password" required />
+      </div>
+
+      <!-- Role -->
+      <div class="role">
+        <label>
+          <input type="radio" name="role" value="user" {% if request.POST.role == "user" %}checked{% endif %}/> User
+        </label>
+        <label>
+          <input type="radio" name="role" value="admin" {% if request.POST.role == "admin" %}checked{% endif %}/> Admin
+        </label>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn">Sign up</button>
+      <!-- Sign in -->
+      <div class="register-link">
+        <p>Already have an account? <a href="{% url 'sign-in' %}">Sign in</a></p>
+      </div>
+    </form>
+  </div>
+  <script src="{% static 'script/sign-up.js' %}"></script>
+</body>
+</html>
