@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import AllBooksForm
-from .models import AllBooks, Users
+from .models import AllBooks, Users, BorrowedBook, FavouriteBook
 from django.http import JsonResponse
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
@@ -210,3 +210,42 @@ def user_profile(request):
 def log_out(request):
     request.session.flush()
     return redirect('sign-in') 
+
+
+def toggle_borrow(request, book_id):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return JsonResponse({'status': 'unauthenticated'}, status=401)
+
+    user = get_object_or_404(Users, id=user_id)
+    book = get_object_or_404(AllBooks, id=book_id)
+
+    borrowed = BorrowedBook.objects.filter(user=user, book=book).first()
+
+    if borrowed:
+        borrowed.delete()
+        book.book_status = 'available'
+        book.save()
+        return JsonResponse({'status': 'returned'})
+    else:
+        BorrowedBook.objects.create(user=user, book=book)
+        book.book_status = 'borrowed'
+        book.save()
+        return JsonResponse({'status': 'borrowed'})
+
+def toggle_favourite(request, book_id):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return JsonResponse({'status': 'unauthenticated'}, status=401)
+
+    user = get_object_or_404(Users, id=user_id)
+    book = get_object_or_404(AllBooks, id=book_id)
+
+    favourite = FavouriteBook.objects.filter(user=user, book=book).first()
+
+    if favourite:
+        favourite.delete()
+        return JsonResponse({'status': 'removed'})
+    else:
+        FavouriteBook.objects.create(user=user, book=book)
+        return JsonResponse({'status': 'added'})

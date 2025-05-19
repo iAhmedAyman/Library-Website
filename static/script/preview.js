@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Get the book ID from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const bookId = document.body.dataset.bookId;
+    const body = document.querySelector("body");
+
+    const bookId = body.getAttribute("data-book-id");
 
     // Get data directly from DOM (rendered by Django)
     const borrowBtn = document.getElementById("borrow-btn");
     const favouriteBtn = document.getElementById("favourite-btn");
     const favouriteIcon = document.getElementById("favourite-icon");
+    const availability = document.getElementById("availability");
 
     const book = {
         id: bookId,
@@ -24,52 +25,44 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // Get borrowed & favourite books from localStorage
-    let borrowedBooks = JSON.parse(localStorage.getItem('borrowed')) || [];
-    let favouriteBooks = JSON.parse(localStorage.getItem('favourite')) || [];
-
-    let isFavourite = favouriteBooks.some(b => b.id === book.id);
-    let isBorrowed = borrowedBooks.some(b => b.id === book.id);
+    let isFavourite = favouriteIcon.classList.contains("bxs-star");
+    let isBorrowed = availability.innerText.trim().toLowerCase() !== "available";
 
     updateFavouriteIcon();
     updateBorrowButton();
     updateAvailability();
 
     borrowBtn.addEventListener('click', function () {
-        const borrowedIndex = borrowedBooks.findIndex(b => b.id === book.id);
-        const favIndex = favouriteBooks.findIndex(b => b.id === book.id);
-
-        if (borrowedIndex === -1) {
-            borrowedBooks.push(book);
-            isBorrowed = true;
-            book.available = false;
-            if (favIndex !== -1) favouriteBooks[favIndex].available = false;
-        } else {
-            borrowedBooks.splice(borrowedIndex, 1);
-            isBorrowed = false;
-            book.available = true;
-            if (favIndex !== -1) favouriteBooks[favIndex].available = true;
-        }
-
-        localStorage.setItem('borrowed', JSON.stringify(borrowedBooks));
-        localStorage.setItem('favourite', JSON.stringify(favouriteBooks));
-        updateBorrowButton();
-        updateAvailability();
+        fetch(`/borrow/${bookId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            isBorrowed = (data.status === 'borrowed');
+            updateBorrowButton();
+            updateAvailability();
+        })
+        .catch(error => console.error('Borrow error:', error));
     });
 
     favouriteBtn.addEventListener('click', function () {
-        const favIndex = favouriteBooks.findIndex(b => b.id === book.id);
-
-        if (favIndex === -1) {
-            favouriteBooks.push(book);
-            isFavourite = true;
-        } else {
-            favouriteBooks.splice(favIndex, 1);
-            isFavourite = false;
-        }
-
-        localStorage.setItem('favourite', JSON.stringify(favouriteBooks));
-        updateFavouriteIcon();
+        fetch(`/favourite/${bookId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            isFavourite = (data.status === 'added');
+            updateFavouriteIcon();
+        })
+        .catch(error => console.error('Favourite error:', error));
     });
 
     function updateFavouriteIcon() {
@@ -82,9 +75,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateAvailability() {
-        const availability = document.getElementById("availability");
-        availability.textContent = book.available ? "Available" : "Borrowed";
-        availability.classList.toggle('available-preview', book.available);
-        availability.classList.toggle('borrowed-preview', !book.available);
+        availability.textContent = isBorrowed ? "Borrowed" : "Available";
+        availability.classList.toggle('available-preview', !isBorrowed);
+        availability.classList.toggle('borrowed-preview', isBorrowed);
+    }
+
+    function getCookie(name) {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                return decodeURIComponent(cookie.split('=')[1]);
+            }
+        }
+        return null;
     }
 });

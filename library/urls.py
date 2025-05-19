@@ -26,4 +26,8 @@ urlpatterns = [
     path('user-profile/', views.user_profile, name='user_profile'),
 
     path('log-out/', views.log_out, name='logout'),
+
+    path("borrow/<int:book_id>/", views.toggle_borrow, name="toggle_borrow"),
+    path("favourite/<int:book_id>/", views.toggle_favourite, name="toggle_favourite"),
+
 ]
