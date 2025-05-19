@@ -34,7 +34,7 @@
     <div class = "main-panel">
         <form method="post" id="profile-form">
             {% csrf_token %}
-            
+            <h0> <i class='bx bx-user-circle'></i></h0>
             <div class="name-title horizontal-center">
                 <h2>{{ user.username }}</h2>
                 <h3>{{ user.get_role_display }}</h3>

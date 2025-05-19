@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 
-
 urlpatterns = [
     path('', views.signin, name='login'),
     path('homepage/', views.homepage, name='homepage'),
@@ -15,12 +14,10 @@ urlpatterns = [
 
     path('my-books/', views.my_books, name='my_books'),
 
+    
     path('add_book/preview/<int:book_id>/', views.preview_edit, name='edit'),
-    path('books/preview/<int:book_id>/', views.preview_edit, name='update_book'),
+    path('books/preview/<int:book_id>/', views.preview, name='preview_book'),
 
-    
-    path('preview/<int:book_id>/', views.preview, name='preview_book'),
-    
 
     path('delete_book/<int:book_id>/', views.delete_book, name='delete_book'),
 
@@ -28,7 +25,5 @@ urlpatterns = [
 
     path('user-profile/', views.user_profile, name='user_profile'),
 
-    path('log-out/', views.log_out, name = 'logout'),
+    path('log-out/', views.log_out, name='logout'),
 ]
-
-

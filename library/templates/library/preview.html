@@ -9,7 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"> <!--Font-->
 </head>
-<body data-user="{{ user.username }}" data-role="{{ user.role }}">
+<body data-user="{{ user.username }}" data-role="{{ user.role }}" data-book-id="{{ book.id }}">
     <header>
         <!-- Navigation Bar -->
         <nav>
@@ -45,19 +45,17 @@
                     <td>
                         <div class="horizontal-flex space-between" style="max-width: 30rem;">
                             <div class="name-title">
-                                <h1>Title</h1>
-                                <p>Author Name</p>
+                                <h1>{{ book.title }}</h1>
+                                <p>{{ book.author }}</p>
                             </div>
                             <div class="flag-categ vertical-flex">
                                 <div class="availability-wrapper">
-                                    <span id="availability">Available</span>
+                                    <span id="availability">{{ book.book_status }}</span>
                                 </div>
-                                <span id="category" class="category"><i class='bx bx-purchase-tag'></i>Category</span>
+                                <span id="category" class="category"><i class='bx bx-purchase-tag'></i>{{ book.category }}</span>
                             </div>
                         </div>
-                        <p id="description-preview">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla fermentum neque sit amet dui tincidunt, at tincidunt velit tincidunt. Integer eu magna nulla. Aenean accumsan, ligula sit amet feugiat dictum, sapien urna fermentum nisi, non placerat sapien odio et nisi. Cras volutpat risus ut nulla venenatis, eu laoreet libero dictum. Quisque lacinia nunc ac leo placerat, eget vehicula ligula consequat. Fusce vestibulum augue eget turpis fermentum, in tincidunt dui fermentum.
-                        </p>
+                        <p id="description-preview"> {{ book.description }} </p>
                         <div class="horizontal-flex">
                             <button class="blue-button" id="borrow-btn">Borrow</button>
                             <button id="favourite-btn" style="margin-left: 1rem; background: none; border: none; font-size: 2rem; color: #007bff;">
@@ -68,7 +66,11 @@
 
                     <!-- Right Side: Book Cover -->
                     <td id="cover-preview" class="horizontal-center">
-                        <img id="cover" src="{% static 'images/Cover.png'%}" alt="Book Cover">
+                        {% if book.cover %}
+                            <img id="cover" src="{{ book.cover.url }}" alt="Book Cover">
+                        {% else %}
+                            <img id="cover" src="{% static 'images/Cover.png' %}" alt="Default Cover">
+                        {% endif %}
                     </td>
                 </tr>
             </table>

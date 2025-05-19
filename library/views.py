@@ -144,9 +144,17 @@ def preview_edit(request, book_id):
     form = AllBooksForm(instance=book)
     return render(request, 'library/previewEdit.html', {'form': form, 'book': book})
 
-def preview(request, id):
-    book = get_object_or_404(AllBooks, id=id)
-    return render(request, 'library/preview.html', {'book': book})
+@csrf_protect
+def preview(request, book_id):
+    user_id = request.session.get('user_id')
+    user = Users.objects.filter(id=user_id).first()
+
+    if user and user.role == 'admin':
+        return redirect('edit', book_id=book_id)
+    
+    book = get_object_or_404(AllBooks, id=book_id)
+    return render(request, 'library/preview.html', {'book': book, 'user': user})
+
 
 def delete_book(request, book_id):
     book = get_object_or_404(AllBooks, id=book_id)

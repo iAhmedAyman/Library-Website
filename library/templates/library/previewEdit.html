@@ -9,7 +9,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 </head>
-<body data-user="{{ user.username }}" data-role="{{ user.role }}">
+<body data-user="{{ user.username }}" data-role="{{ user.role }}" data-book-id="{{ book.id }}">
     <header>
         <nav>
             <ul id="navBar">
@@ -96,7 +96,7 @@
         </div>
 
         <!-- Hidden Form -->
-        <form id="book-update-form" action="{% url 'update_book' book.id %}" method="POST" enctype="multipart/form-data" style="display: none;">
+        <form id="book-update-form" action="{% url 'edit' book.id %}" method="POST" enctype="multipart/form-data" style="display: none;">
             {% csrf_token %}
             <input type="file" name="cover" id="cover-upload" accept="image/*" style="display: none;">
             <input type="hidden" name="title" value="{{ book.title }}">

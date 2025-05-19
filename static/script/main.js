@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const titleInput = document.querySelector('input[placeholder="Book title"]');
   const authorInput = document.querySelector('input[placeholder="Author name"]');
   const categoryInput = document.querySelector('input[placeholder="Book category"]');
@@ -48,13 +48,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   coverOverlay.addEventListener('click', () => fileInput.click());
 
-  fileInput.addEventListener('change', function() {
+  fileInput.addEventListener('change', function () {
     const file = this.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = function() {
+      reader.onload = function () {
         coverImage.src = reader.result;
-        console.log(coverImage.src);
       };
       reader.readAsDataURL(file);
     }
@@ -142,13 +141,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Toggle filter menu
+   // Toggle filter menu
   if (filterIcon && filterMenu) {
     filterIcon.addEventListener("click", () => {
       filterMenu.style.display = (filterMenu.style.display === "none" || filterMenu.style.display === "") ? "block" : "none";
     });
 
-    // Close filter menu on outside click
+	// Close filter menu on outside click
     const filter = document.querySelector(".filter");
     document.addEventListener('click', (e) => {
       if (!filter.contains(e.target) && !filterMenu.contains(e.target)) {
@@ -156,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // Handle filter option click
+	// Handle filter option click
     filterMenu.addEventListener("click", function (e) {
       const filterType = e.target.dataset.filterType;
       if (!filterType) return;
@@ -180,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
       filterMenu.style.display = "none";
     });
 
-    // Apply filter from modal
+	 // Apply filter from modal
     applyBtn.addEventListener("click", () => {
       let value = "";
       if (currentFilterType === "availability") {
@@ -245,14 +244,24 @@ function loadBooks(searchText = "", filterType = "", filterValue = "") {
         return matchesSearch && matchesFilter;
       });
 
+      const userJson = localStorage.getItem("user");
+      let role = null;
+      try {
+        role = userJson ? JSON.parse(userJson).role : null;
+      } catch (e) {
+        console.warn("Invalid user object in localStorage");
+      }
+
       filteredBooks.forEach(book => {
         const card = document.createElement("div");
         card.classList.add("book-card");
-        const userJson = localStorage.getItem("user");
 
-        const userPreview = `
+        const previewUrl = role === "admin"? `/add_book/preview/${book.id}/`: `/books/preview/${book.id}/`;
+
+
+        const cardHTML = `
           <img src="${book.cover}" alt="Book Cover" class="book-img">
-          <a href="/add_book/preview/${book.id}/" class="book-overlay">
+          <a href="${previewUrl}" class="book-overlay">
             <div class="book-header">
               <div class="left">
                 <h3>${book.title}</h3>
@@ -266,15 +275,7 @@ function loadBooks(searchText = "", filterType = "", filterValue = "") {
             <p class="description">Description: ${book.description.slice(0, 140)}${book.description.length > 140 ? "..." : ""}</p>
           </a>`;
 
-        const adminPreview = userPreview; // same link for now
-
-        try {
-          const { role } = userJson ? JSON.parse(userJson) : {};
-          card.innerHTML = role === "admin" ? adminPreview : userPreview;
-        } catch (e) {
-          card.innerHTML = userPreview;
-        }
-
+        card.innerHTML = cardHTML;
         bookContainer.appendChild(card);
       });
     })
