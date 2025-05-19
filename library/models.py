@@ -15,18 +15,24 @@ class Users(models.Model):
         return self.username
 
 # ALLBOOKS TABLE
+from django.db import models
+
 class AllBooks(models.Model):
     BOOK_STATUS = [
         ('available', 'Available'),
         ('borrowed', 'Borrowed'),
     ]
+
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
     description = models.TextField()
     book_status = models.CharField(max_length=10, choices=BOOK_STATUS, default='available')
+    cover = models.ImageField()
 
     def __str__(self):
         return self.title
+
 
 # BORROWEDBOOKS TABLE (many-to-many relationship)
 class BorrowedBook(models.Model):
