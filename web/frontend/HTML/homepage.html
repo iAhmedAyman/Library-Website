@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Home</title>
+		<link rel="stylesheet" href="style/style.css">
+		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+		<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"> <!--Font-->
+	</head>
+	<body>
+		<header>
+			<!-- Navigation Bar -->
+			<nav>
+				<ul id="navBar">
+					<li id="logo"><img src="images/logo.png" alt="logo"></li>
+					<li id="pages">
+						<a href="homepage.html" id = "home">Home</a>
+						<a href="books.html" id = "books">Books</a>
+						<a href="About-us.html" id = "about-us">About Us</a>
+					</li>
+					<li id="profile">
+						<a href="sign-up.html" id="profile-sign-up">Sign Up</a>
+						<a href="sign-in.html" id="profile-sign-in">Sign In</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<div class="main-panel vertical-center" style="min-height: 40vh; margin-bottom: 10rem;">
+			<div class="horizontal-flex horizontal-center vertical-center">
+				<!--Carousel-->
+				<section class="hero-carousel">
+					<div class="carousel-track">
+						  <div class="slide vertical-flex">
+							<h2>
+								Sign Up
+							</h2>
+							<p>
+								Create an account by entering the necessary information, and choose a role as either User or Admin.
+							</p>
+						</div>
+						<div class="slide vertical-flex">
+							<h2>
+								Borrow Books
+							</h2>
+							<p>
+								As a user, browse the available books or search for a specific one, and borrow them or add them to your favorite list.
+							</p>
+						</div>
+						<div class="slide vertical-flex">
+							<h2>
+								Add Books
+							</h2>
+							<p>
+								As an admin, add new books or edit/delete existing ones.
+							</p>
+						</div>
+						<div class="slide vertical-flex">
+							<h2>
+								Sign Up
+							</h2>
+							<p>
+								Create an account by entering the necessary information, and choose a role as either User or Admin.
+							</p>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="horizontal-flex">
+				<a href="sign-up.html"><button class="blue-button" id="box-button-prev" style="margin-right: 1rem; width: 6rem;">Get Started</button></a>
+				<button class="gray-button" id="box-button-next">Learn More</button>
+			</div>
+
+		</div>
+
+		<div style="background-color: white; padding-block: 1rem;">
+			<div class="main-panel content-section" id="learn-more">
+				<h2>User Features</h2>
+				<div class="features-grid">
+					<div class="feature-card">
+						<h4>Browse Books</h4>
+						<p>Look at all the available books and hover on them to view a summary of it's details.</p>
+					</div>
+					<div class="feature-card">
+						<h4>Search for Books</h4>
+						<p>Find books by title, author, or category to easily discover what you're looking for.</p>
+					</div>
+					<div class="feature-card">
+						<h4>View Book Details</h4>
+						<p>Select any book to see its full description and additional information.</p>
+					</div>
+					<div class="feature-card">
+						<h4>Borrow Books</h4>
+						<p>Borrow a book only if it is available for borrowing, or add it to your favorite list.</p>
+					</div>
+					<div class="feature-card">
+						<h4>View Borrowed Books</h4>
+						<p>Have access to a list of all books you have borrowed</p>
+					</div>
+					<div class="feature-card">
+						<h4>View Favorite Books</h4>
+						<p>Have access to a list of all the books you marked as favorite.</p>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="main-panel content-section">
+				<h2>Admin Features</h2>
+			
+				<div class="features-grid">
+					<div class="feature-card">
+						<h4>Add New Books</h4>
+						<p>Admins can add new books to the system, including all relevant details like title, author, category, and availability.</p>
+					</div>
+					<div class="feature-card">
+						<h4>View List of All Books</h4>
+						<p>Admins can view a list of all books in the system, including those available and borrowed.</p>
+					</div>
+					<div class="feature-card">
+						<h4>View Book Details</h4>
+						<p>Select any book to see its full description and additional information.</p>
+					</div>
+					<div class="feature-card">
+						<h4>Edit Book Details</h4>
+						<p> Admins can select a book and modify its details, such as title, author, availability, and other relevant information.</p>
+					</div>
+					<div class="feature-card">
+						<h4>Delete a Book</h4>
+						<p>Admins can remove books from the system when necessary.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script src="script/nav.js"></script> 
+	<script src="script/main.js"></script>   
+  	</body>
+</html>
