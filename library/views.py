@@ -89,7 +89,7 @@ def my_books(request):
         except Users.DoesNotExist:
             user = None
 
-    return render(request, 'library/Books.html', {'user': user})
+    return render(request, 'library/MyBooks.html', {'user': user})
 
 def api_books(request):
     books = AllBooks.objects.all()
