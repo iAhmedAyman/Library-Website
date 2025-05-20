@@ -164,6 +164,20 @@ button, a, .edit-overlay {
     width: 100%;
     filter: drop-shadow(0 0 25px #2947f1);
 }
+#add-book::before {
+    content: "Add Books";
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    overflow: hidden;
+    color: #2947f1;
+    transition: 0.8s ease-in-out;
+}
+#add-book:hover::before {
+    text-decoration: underline;
+    width: 100%;
+    filter: drop-shadow(0 0 25px #2947f1);
+}
 #about-us {
     position: relative
 }

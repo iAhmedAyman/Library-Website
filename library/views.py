@@ -131,6 +131,9 @@ def add_book(request):
 def preview_edit(request, book_id):
     book = get_object_or_404(AllBooks, id=book_id)
 
+    user_id = request.session.get('user_id')
+    user = get_object_or_404(Users, id=user_id)
+
     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
 
     if request.method == 'POST' and is_ajax:
@@ -142,7 +145,7 @@ def preview_edit(request, book_id):
             return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
 
     form = AllBooksForm(instance=book)
-    return render(request, 'library/previewEdit.html', {'form': form, 'book': book})
+    return render(request, 'library/previewEdit.html', {'form': form, 'book': book, 'user': user})
 
 @csrf_protect
 def preview(request, book_id):

@@ -11,16 +11,17 @@
 </head>
 <body data-user="{{ user.username }}" data-role="{{ user.role }}" data-book-id="{{ book.id }}">
     <header>
+        <!-- Navigation Bar -->
         <nav>
             <ul id="navBar">
-                <li id="logo"><img src="{% static 'images/logo.png' %}" alt="logo"></li>
+                <li id="logo"><img src="{% static 'images/logo.png'%}" alt="logo"></li>
                 <li id="pages">
-                    <a href="homepage.html" id="home">Home</a>
-                    <a href="books.html" id="books">Books</a>
-                    <a href="About-us.html" id="about-us">About Us</a>
+                    <a href="{% url 'homepage' %}" id="home">Home</a>
+                    <a href="{% url 'books' %}" id="books">Books</a>
+                    <a href="{% url 'about' %}" id="about-us">About Us</a>
                 </li>
                 <li id="profile">
-                    <a href="profile" id="profile-img">
+                    <a href="{% url 'user_profile' %}" id="profile-img">
                         <h1><i class='bx bx-user-circle'></i></h1>
                         <div class="name-title">
                             <h5>Username</h5>

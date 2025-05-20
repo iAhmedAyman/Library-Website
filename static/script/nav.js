@@ -26,6 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
           <li id="pages">
               <a href="/homepage/" id="home">Home</a>
               <a href="/books/" id="books">Books</a>
+              <a href="/add_book/" id="add-book">Add Books</a>
               <a href="/about/" id="about-us">About Us</a>
           </li>
           <li id="profile">
