@@ -195,6 +195,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let selectedFilterType = "";
 
+        // Close popup when clicking the close (X) button
+        closePopup.addEventListener("click", () => {
+            popup.style.display = "none";
+        });
+
+        // Close popup when clicking outside of it
+        document.addEventListener("click", (e) => {
+            if (popup.style.display === "block" && !popup.contains(e.target) && !filterMenu.contains(e.target)) {
+                popup.style.display = "none";
+            }
+        });
+
+        // Close popup when pressing Escape
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && popup.style.display === "block") {
+                popup.style.display = "none";
+            }
+        });
+
         // When user clicks a filter option from the dropdown
         filterMenu.querySelectorAll("div").forEach(option => {
             option.addEventListener("click", () => {
@@ -202,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 popupInput.style.display = "none";
                 popupSelect.style.display = "none";
 
-                if (selectedFilterType === "availability") {
+                if (selectedFilterType === "status") {
                     filterLabel.textContent = "Select Availability:";
                     popupSelect.style.display = "block";
                     popupSelect.value = "";
@@ -221,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // When user applies the selected filter
         applyBtn.addEventListener("click", () => {
             let filterValue = "";
-            if (selectedFilterType === "availability") {
+            if (selectedFilterType === "status") {
                 filterValue = popupSelect.value.toLowerCase().trim();
             } else {
                 filterValue = popupInput.value.toLowerCase().trim();
@@ -234,13 +253,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Toggle filter menu
         filterIcon.addEventListener("click", () => {
             filterMenu.style.display = (filterMenu.style.display === "none" || filterMenu.style.display === "") ? "block" : "none";
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!filterContainer.contains(e.target) && !filterMenu.contains(e.target)) {
-                filterMenu.style.display = "none";
-            }
         });
 
         // Live search
