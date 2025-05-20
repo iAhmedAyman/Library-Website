@@ -30,4 +30,7 @@ urlpatterns = [
     path("borrow/<int:book_id>/", views.toggle_borrow, name="toggle_borrow"),
     path("favourite/<int:book_id>/", views.toggle_favourite, name="toggle_favourite"),
 
+    path('api/borrowed_books/', views.api_borrowed_books, name='api_borrowed_books'),
+    path('api/favourite_books/', views.api_favourite_books, name='api_favourite_books'),
+
 ]

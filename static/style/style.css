@@ -1096,7 +1096,7 @@ span {
 #filterIcon,
 #barrowedFilterIcon,
 #favouriteFilterIcon {
-    font-size: 22px;
+    font-size: 27px;
     cursor: pointer;
     color: #555;
     transition: color 0.2s ease;
@@ -1110,7 +1110,9 @@ span {
 }
 
 /* ----------Filter Popup---------- */
-#filterPopup {
+#filterPopup,
+#favouriteFilterPopup,
+#barrowedFilterPopup {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -1126,7 +1128,9 @@ span {
     font-family: sans-serif;
 }
 
-#filterLabel {
+#filterLabel,
+#barrowedFilterLabel,
+#favouriteFilterLabel {
     font-size: 16px;
     font-weight: 500;
     color: #333;
@@ -1134,8 +1138,8 @@ span {
     display: block;
 }
 
-#filterPopup input,
-#filterPopup select {
+#filterPopup input, #barrowedFilterPopup input, #favouriteFilterPopup input,
+#filterPopup select, #barrowedFilterPopup select, #favouriteFilterPopup select {
     width: 100%;
     padding: 10px 12px;
     margin: 8px 0 16px 0;
@@ -1146,14 +1150,16 @@ span {
     transition: border 0.2s ease;
 }
 
-#filterPopup input:focus,
-#filterPopup select:focus {
+#filterPopup input:focus, #barrowedFilterPopup input:focus, #favouriteFilterPopup input:focus,
+#filterPopup select:focus, #barrowedFilterPopup select:focus, #favouriteFilterPopup select:focus {
     border-color: #4a67ff;
     outline: none;
     box-shadow: 0 0 0 3px rgba(74, 103, 255, 0.1);
 }
 
-#applyFilter {
+#applyFilter,
+#barrowedApplyFilter,
+#favouriteApplyFilter {
     background-color: #4a67ff;
     color: white;
     padding: 10px 14px;
@@ -1166,11 +1172,15 @@ span {
     transition: background 0.2s ease;
 }
 
-#applyFilter:hover {
+#applyFilter:hover,
+#barrowedApplyFilter:hover,
+#favouriteApplyFilter:hover {
     background-color: #3d54cc;
 }
 
-#closePopup {
+#closePopup,
+#barrowedClosePopup,
+#favouriteClosePopup {
     position: absolute;
     top: 14px;
     right: 16px;
@@ -1181,7 +1191,9 @@ span {
     line-height: 1;
 }
 
-#closePopup:hover {
+#closePopup:hover,
+#barrowedClosePopup:hover,
+#favouriteClosePopup:hover {
     color: #333;
 }
 
@@ -1192,7 +1204,7 @@ span {
 }
 
 #filterIcon {
-    font-size: 22px;
+    font-size: 27px;
     cursor: pointer;
     color: #555;
     transition: color 0.2s ease;

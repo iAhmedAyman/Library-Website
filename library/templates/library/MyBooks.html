@@ -44,15 +44,28 @@
             <div class="filter">
                 <i1 id="barrowedFilterIcon" class='bx bx-filter'></i1>
                 <div id="barrowedFilterMenu" class="barrowedFilter-menu" style="display: none;">
-                    <div data-filter-type="category">Filter by Category</div>
-                    <div data-filter-type="author">Filter by Author</div>
-                    <div data-filter-type="status">Filter by Availability</div> <!-- Add this line -->
+                    <div class="filter-option" data-filter-type="category">Filter by Category</div>
+                    <div class="filter-option" data-filter-type="author">Filter by Author</div>
+                    <div class="filter-option" data-filter-type="status">Filter by Availability</div> <!-- Add this line -->
                 </div>
             </div>
 
             <div class="box">
                 <i class='bx bx-search'></i>
                 <input type="text" id="barrowedSearchInput" name="" placeholder="Search">
+            </div>
+
+            <!-- Filter Popup -->
+            <div id="barrowedFilterPopup">
+                <span id="barrowedClosePopup">&times;</span>
+                <div id="barrowedFilterLabel" style="margin-bottom: 5px;">Filter:</div>
+                <input type="text" id="barrowedPopupInput" placeholder="Enter value" />
+                <select id="barrowedPopupSelect" style="display: none;">
+                    <option value="" disabled selected>Select availability</option>
+                    <option value="available">Available</option>
+                    <option value="borrowed">Borrowed</option>
+                </select>
+                <button id="barrowedApplyFilter">Apply Filter</button>
             </div>
         </div>
         
@@ -158,6 +171,19 @@
             <div class="box">
                 <i class='bx bx-search'></i>
                 <input type="text" id="favouriteSearchInput" name="" placeholder="Search">
+            </div>
+
+            <!-- Filter Popup -->
+            <div id="favouriteFilterPopup">
+                <span id="favouriteClosePopup">&times;</span>
+                <div id="favouriteFilterLabel" style="margin-bottom: 5px;">Filter:</div>
+                <input type="text" id="favouritePopupInput" placeholder="Enter value" />
+                <select id="favouritePopupSelect" style="display: none;">
+                    <option value="" disabled selected>Select availability</option>
+                    <option value="available">Available</option>
+                    <option value="borrowed">Borrowed</option>
+                </select>
+                <button id="favouriteApplyFilter">Apply Filter</button>
             </div>
         </div>
         

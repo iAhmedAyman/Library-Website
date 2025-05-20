@@ -59,7 +59,7 @@
                         <div class="horizontal-flex">
                             <button class="blue-button" id="borrow-btn">Borrow</button>
                             <button id="favourite-btn" style="margin-left: 1rem; background: none; border: none; font-size: 2rem; color: #007bff;">
-                                <i id="favourite-icon" class='bx bx-star'></i>
+                                <i id="favourite-icon" class='{% if is_favourite %}bx bxs-star gold{% else %}bx bx-star{% endif %}'></i>
                             </button>                            
                         </div>                          
                     </td>

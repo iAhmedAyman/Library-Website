@@ -151,9 +151,13 @@ def preview(request, book_id):
 
     if user and user.role == 'admin':
         return redirect('edit', book_id=book_id)
-    
+
     book = get_object_or_404(AllBooks, id=book_id)
-    return render(request, 'library/preview.html', {'book': book, 'user': user})
+
+    # Check if this book is in user's favourites
+    is_favourite = FavouriteBook.objects.filter(user=user, book=book).exists()
+    
+    return render(request, 'library/preview.html', {'book': book, 'user': user, 'is_favourite': is_favourite})
 
 
 def delete_book(request, book_id):
@@ -249,3 +253,48 @@ def toggle_favourite(request, book_id):
     else:
         FavouriteBook.objects.create(user=user, book=book)
         return JsonResponse({'status': 'added'})
+    
+
+def api_borrowed_books(request):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+
+    user = get_object_or_404(Users, id=user_id)
+    borrowed_books = BorrowedBook.objects.filter(user=user).select_related('book')
+
+    data = [
+        {
+            "id": entry.book.id,
+            "title": entry.book.title,
+            "author": entry.book.author,
+            "category": entry.book.category,
+            "description": entry.book.description,
+            "cover": entry.book.cover.url if entry.book.cover else "",
+            "available": entry.book.book_status == 'available',
+        }
+        for entry in borrowed_books
+    ]
+    return JsonResponse(data, safe=False)
+
+def api_favourite_books(request):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+
+    user = get_object_or_404(Users, id=user_id)
+    favourite_books = FavouriteBook.objects.filter(user=user).select_related('book')
+
+    data = [
+        {
+            "id": entry.book.id,
+            "title": entry.book.title,
+            "author": entry.book.author,
+            "category": entry.book.category,
+            "description": entry.book.description,
+            "cover": entry.book.cover.url if entry.book.cover else "",
+            "available": entry.book.book_status == 'available',
+        }
+        for entry in favourite_books
+    ]
+    return JsonResponse(data, safe=False)
