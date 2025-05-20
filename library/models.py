@@ -28,7 +28,7 @@ class AllBooks(models.Model):
     category = models.CharField(max_length=100)
     description = models.TextField()
     book_status = models.CharField(max_length=10, choices=BOOK_STATUS, default='available')
-    cover = models.ImageField()
+    cover = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.title

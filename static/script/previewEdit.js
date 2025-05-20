@@ -215,22 +215,6 @@ function getCookie(name) {
     return cookieValue;
 }
 
-
-
-
-const deleteButton = document.querySelector(".red-button");
-
-deleteButton.addEventListener('click', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const bookId = urlParams.get("id");
-
-    let books = JSON.parse(localStorage.getItem("books")) || [];
-    books = books.filter(book => book.id !== bookId); // delete the book with matching ID
-
-    localStorage.setItem('books', JSON.stringify(books));
-    window.location.href = "books.html"; 
-});
-
  // Function to show feedback
  function showFeedback(message, isSuccess = true) {
     // Create a feedback element if it doesn't exist
