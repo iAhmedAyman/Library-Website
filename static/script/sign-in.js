@@ -19,5 +19,5 @@ function showFormError(message) {
 
 function clearErrors() {
   const error = document.getElementById('form-error');
-  if (error) error.remove();
+  if (error) error.textContent = '';
 }
