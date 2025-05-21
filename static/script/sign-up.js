@@ -25,8 +25,8 @@ document.getElementById('signup-form').addEventListener('submit', function(event
     hasError = true;
   }
 
-  if (password.length < 6) {
-    showFieldError(passwordInput, 'Password must be at least 6 characters.');
+  if (!isValidPassword(password)) {
+    showFieldError(passwordInput, 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.');
     hasError = true;
   }
 
@@ -51,7 +51,8 @@ function isValidUsername(username) {
 }
 
 function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
 }
 
 function showFieldError(inputElement, message) {
@@ -66,4 +67,14 @@ function showFieldError(inputElement, message) {
 
 function clearErrors() {
   document.querySelectorAll('.field-error').forEach(error => error.remove());
+}
+
+function isValidPassword(password) {
+  const minLength = 8;
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  return password.length >= minLength && hasUpper && hasLower && hasNumber && hasSpecial;
 }
