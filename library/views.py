@@ -159,8 +159,13 @@ def preview(request, book_id):
 
     # Check if this book is in user's favourites
     is_favourite = FavouriteBook.objects.filter(user=user, book=book).exists()
-    
-    return render(request, 'library/preview.html', {'book': book, 'user': user, 'is_favourite': is_favourite})
+    is_borrowed = book.book_status == "borrowed"
+
+    # Check if the current user borrowed the book
+    borrowed_by_user = BorrowedBook.objects.filter(book=book, user=user).exists()
+    return render(request, 'library/preview.html', {'book': book, 'user': user, 'is_favourite': is_favourite ,
+        'is_borrowed': is_borrowed,
+        'borrowed_by_user': borrowed_by_user,})
 
 
 def delete_book(request, book_id):

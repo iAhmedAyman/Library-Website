@@ -57,7 +57,11 @@
                         </div>
                         <p id="description-preview"> {{ book.description }} </p>
                         <div class="horizontal-flex">
-                            <button class="blue-button" id="borrow-btn">Borrow</button>
+                            <button class="blue-button" id="borrow-btn"
+                                {% if is_borrowed and not borrowed_by_user %}disabled{% endif %}>
+                                {% if is_borrowed and borrowed_by_user %}Return{% else %}Borrow{% endif %}
+                            </button>
+
                             <button id="favourite-btn" style="margin-left: 1rem; background: none; border: none; font-size: 2rem; color: #007bff;">
                                 <i id="favourite-icon" class='{% if is_favourite %}bx bxs-star gold{% else %}bx bx-star{% endif %}'></i>
                             </button>                            
