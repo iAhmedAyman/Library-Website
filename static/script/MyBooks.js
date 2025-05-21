@@ -2,6 +2,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // Load borrowed and favorite books from localStorage
     loadBorrowedBooks();
     loadFavoriteBooks();
+
+     // Clear filter
+    const borrowedClearFilterDiv = document.getElementById("borrowedClearFilter");
+    const favouriteClearFilterDiv = document.getElementById("favouriteClearFilter");
+
+    if (borrowedClearFilterDiv) {
+      borrowedClearFilterDiv.addEventListener("click", () => {
+        loadBorrowedBooks(); // Reload all books with no filters
+      });
+    }
+
+    if (favouriteClearFilterDiv) {
+      favouriteClearFilterDiv.addEventListener("click", () => {
+        loadFavoriteBooks(); // Reload all books with no filters
+      });
+    }
     
     // Utility function to filter cards
     function filterBooks(container, searchInput, filterType = null, filterValue = null) {

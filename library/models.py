@@ -9,7 +9,7 @@ class Users(models.Model):
     username = models.CharField(max_length=100, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
-
+    
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
     role = models.CharField(max_length=5, choices=ROLE_CHOICES, default='user')
@@ -31,7 +31,11 @@ class AllBooks(models.Model):
     category = models.CharField(max_length=100)
     description = models.TextField()
     book_status = models.CharField(max_length=10, choices=BOOK_STATUS, default='available')
-    cover = models.ImageField(null=True, blank=True)
+    cover = models.ImageField(
+        null=True,
+        blank=True,
+        default='default/Cover.png'
+        )
 
     def __str__(self):
         return self.title

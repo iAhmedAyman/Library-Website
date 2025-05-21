@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const titleInput = document.querySelector('input[placeholder="Book title"]');
   const authorInput = document.querySelector('input[placeholder="Author name"]');
   const categoryInput = document.querySelector('input[placeholder="Book category"]');
-  const idInput = document.querySelector('input[placeholder="Book ID"]');
   const descriptionInput = document.getElementById('description-input');
   const addButton = document.querySelector('.blue-button');
   const addBookForm = document.getElementById('add-book-form');
@@ -111,34 +110,9 @@ document.addEventListener('DOMContentLoaded', function () {
       return false; // Stop processing if validation fails
     }
     
-    const book = {
-      id: idInput.value.trim() || generateUniqueId(),
-      title: titleInput.value.trim(),
-      author: authorInput.value.trim(),
-      category: categoryInput.value.trim(),
-      description: descriptionInput.value.trim(),
-      dateAdded: new Date().toISOString(),
-      cover: coverImage.src,
-      available: true
-    };
+    showFeedback(`Submitting Book...`);
     
-    if (idInput.value.trim() && books.some(b => b.id === book.id)) {
-      showFeedback(`Book with ID ${book.id} already exists!`, false);
-      return false;
-    }
-    
-    books.push(book);
-    localStorage.setItem('books', JSON.stringify(books));
-    showFeedback(`Book "${book.title}" added successfully!`);
-    
-    titleInput.value = '';
-    authorInput.value = '';
-    categoryInput.value = '';
-    idInput.value = '';
-    descriptionInput.value = '';
-    
-    window.location.href = `/add_book/preview/${book.id}/`;
-    return false; // Prevent form submission
+    document.querySelector('form').submit();
   }
 
   // Add form submit handler for better validation control
@@ -234,6 +208,15 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       popup.style.display = "none";
     });
+
+    // Clear filter
+    const clearFilterDiv = document.getElementById("clearFilter");
+
+    if (clearFilterDiv) {
+      clearFilterDiv.addEventListener("click", () => {
+        loadBooks(); // Reload all books with no filters
+      });
+    }
 
     // Close modal via X
     closePopup.addEventListener("click", () => {
