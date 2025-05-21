@@ -134,9 +134,6 @@ def preview_edit(request, book_id):
     user_id = request.session.get('user_id')
     user = get_object_or_404(Users, id=user_id)
 
-    if user and user.role == 'user':
-        return redirect('preview_book', book_id=book_id)
-
     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
 
     if request.method == 'POST' and is_ajax:
@@ -201,8 +198,11 @@ def user_profile(request):
             last_name = request.POST.get('last_name')
             email = request.POST.get('email')
 
+            if not first_name and last_name:
+                return redirect('user_profile')
+            
             user.first_name = first_name
-            user.last_name = last_name
+            user.last_name = last_name if first_name else ''
             user.email = email
             user.save()
 
@@ -222,6 +222,7 @@ def user_profile(request):
         return redirect('user_profile')
 
     return render(request, 'library/user-profile.html', {'user': user})
+
 
 def log_out(request):
     request.session.flush()
