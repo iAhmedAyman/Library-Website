@@ -134,6 +134,9 @@ def preview_edit(request, book_id):
     user_id = request.session.get('user_id')
     user = get_object_or_404(Users, id=user_id)
 
+    if user and user.role == 'user':
+        return redirect('preview_book', book_id=book_id)
+
     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
 
     if request.method == 'POST' and is_ajax:
