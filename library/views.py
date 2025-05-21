@@ -199,6 +199,8 @@ def user_profile(request):
             email = request.POST.get('email')
 
             user.username = f"{first_name} {last_name}"
+            user.first_name = first_name
+            user.last_name = last_name
             user.email = email
             user.save()
 
