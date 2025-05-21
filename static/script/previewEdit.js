@@ -28,18 +28,57 @@ fileInput.addEventListener('change', function () {
     }
 });
 
+// Function to create character counters
+function createCharCounter(inputElement, maxLength, minLength = null) {
+    const counterDiv = document.createElement('div');
+    counterDiv.className = 'char-counter';
+    counterDiv.style.fontSize = '12px';
+    counterDiv.style.color = '#666';
+    counterDiv.style.textAlign = 'right';
+    counterDiv.style.marginTop = '2px';
+    
+    if (inputElement.parentNode) {
+        inputElement.parentNode.insertBefore(counterDiv, inputElement.nextSibling);
+    }
+
+    function updateCounter() {
+        const currentLength = inputElement.value ? inputElement.value.length : inputElement.textContent.length;
+        if (maxLength) {
+            counterDiv.textContent = `${currentLength}/${maxLength}`;
+            counterDiv.style.color = currentLength >= maxLength * 0.9 ? 'orange' : '#666';
+            if (currentLength === maxLength) counterDiv.style.color = 'red';
+        }
+        if (minLength !== null) {
+            counterDiv.textContent = `${currentLength} characters (min: ${minLength})`;
+            counterDiv.style.color = currentLength < minLength ? 'red' : 'green';
+        }
+    }
+
+    return { 
+        update: updateCounter,
+        element: counterDiv
+    };
+}
+
 // title and author Inline Editing
 const titleOverlay = document.getElementById('title-edit');
 const titleElement = document.querySelector('.name-title .edit-info h1');
 const authorOverlay = document.getElementById('author-edit');
 const authorElement = document.querySelector('.name-title .edit-info p');
 
+// Create initial character counters for static elements
+const titleCounter = createCharCounter(titleElement, MAX_TITLE_LENGTH);
+const authorCounter = createCharCounter(authorElement, MAX_AUTHOR_LENGTH);
+// Update counters with initial values
+titleCounter.update();
+authorCounter.update();
+
 titleOverlay.addEventListener('click', () => {
-    makeEditable(titleElement, titleOverlay, MAX_TITLE_LENGTH);
+    makeEditable(titleElement, titleOverlay, MAX_TITLE_LENGTH, false, titleCounter);
 });
 
 authorOverlay.addEventListener('click', () => {
-    makeEditable(authorElement, authorOverlay, MAX_AUTHOR_LENGTH);
+    makeEditable(authorElement, authorOverlay, MAX_AUTHOR_LENGTH, false, authorCounter);
 });
 
 // CATEGORY Inline Editing
@@ -54,12 +93,16 @@ categoryOverlay.addEventListener('click', () => {
 const descriptionOverlay = document.querySelector('.description .edit-info .edit-overlay');
 const descriptionElement = document.getElementById('description-preview');
 
+// Create description counter
+const descriptionCounter = createCharCounter(descriptionElement, null, MIN_DESCRIPTION_LENGTH);
+descriptionCounter.update();
+
 descriptionOverlay.addEventListener('click', () => {
-    makeEditable(descriptionElement, descriptionOverlay, MIN_DESCRIPTION_LENGTH);
+    makeEditable(descriptionElement, descriptionOverlay, MIN_DESCRIPTION_LENGTH, false, descriptionCounter);
 });
 
 // Function to turn an element into an input field
-function makeEditable(element, overlay, limit, hasIcon = false) {
+function makeEditable(element, overlay, limit, hasIcon = false, counter = null) {
     const oldValue = hasIcon ? element.innerText.trim().replace(/^.*?\s/, '') : element.innerText.trim(); 
     
     if (element.id === 'description-preview') {
@@ -90,6 +133,9 @@ function makeEditable(element, overlay, limit, hasIcon = false) {
         input.setAttribute('maxlength', limit);
     }
 
+    // Store the original element position for the counter
+    const originalNextSibling = element.nextSibling;
+    const parentNode = element.parentNode;
 
     element.replaceWith(input);
     input.focus();
@@ -97,9 +143,36 @@ function makeEditable(element, overlay, limit, hasIcon = false) {
     // Hide the overlay while editing
     overlay.style.display = "none";
 
+    // Update character counter for inputs
+    if (counter) {
+        // Make sure counter is attached after the input
+        if (counter.element.parentNode !== parentNode || counter.element.nextSibling !== originalNextSibling) {
+            parentNode.insertBefore(counter.element, originalNextSibling);
+        }
+        
+        // Update counter on input
+        input.addEventListener('input', () => {
+            const currentLength = input.value.length;
+            if (limit === MIN_DESCRIPTION_LENGTH) {
+                // Description counter (with minimum)
+                counter.element.textContent = `${currentLength} characters (min: ${limit})`;
+                counter.element.style.color = currentLength < limit ? 'red' : 'green';
+            } else {
+                // Title/author counter (with maximum)
+                counter.element.textContent = `${currentLength}/${limit}`;
+                counter.element.style.color = currentLength >= limit * 0.9 ? 'orange' : '#666';
+                if (currentLength === limit) counter.element.style.color = 'red';
+            }
+        });
+        
+        // Trigger initial update
+        const event = new Event('input');
+        input.dispatchEvent(event);
+    }
+
     input.addEventListener("blur", function() {
         overlay.style.display = "flex";
-        saveInput(input, element, hasIcon);
+        saveInput(input, element, hasIcon, counter);
     });
     input.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
@@ -107,7 +180,6 @@ function makeEditable(element, overlay, limit, hasIcon = false) {
         }
     });
 }
-
 async function saveInput(input, originalElement, hasIcon = false) {
     const newValue = input.value.trim();
 

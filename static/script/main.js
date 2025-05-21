@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const idInput = document.querySelector('input[placeholder="Book ID"]');
   const descriptionInput = document.getElementById('description-input');
   const addButton = document.querySelector('.blue-button');
+  const addBookForm = document.getElementById('add-book-form');
 
   const MAX_TITLE_LENGTH = 50;
   const MAX_AUTHOR_LENGTH = 40;
@@ -66,12 +67,28 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function validateForm() {
-    if (!titleInput.value.trim()) return showFeedback('Please enter a book title', false), false;
-    if (!authorInput.value.trim()) return showFeedback('Please enter an author name', false), false;
-    if (!categoryInput.value.trim()) return showFeedback('Please enter a category', false), false;
-    if (descriptionInput.value.trim().length < MIN_DESCRIPTION_LENGTH)
-      return showFeedback(`Description must be at least ${MIN_DESCRIPTION_LENGTH} characters long`, false), false;
-    return true;
+    let isValid = true;
+    let errorMessage = '';
+
+    if (!titleInput.value.trim()) {
+      errorMessage = 'Please enter a book title';
+      isValid = false;
+    } else if (!authorInput.value.trim()) {
+      errorMessage = 'Please enter an author name';
+      isValid = false;
+    } else if (!categoryInput.value.trim()) {
+      errorMessage = 'Please enter a category';
+      isValid = false;
+    } else if (descriptionInput.value.trim().length < MIN_DESCRIPTION_LENGTH) {
+      errorMessage = `Description must be at least ${MIN_DESCRIPTION_LENGTH} characters long`;
+      isValid = false;
+    }
+
+    if (!isValid) {
+      showFeedback(errorMessage, false);
+    }
+    
+    return isValid;
   }
 
   function showFeedback(message, isSuccess = true) {
@@ -87,8 +104,13 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => { feedback.style.display = 'none'; }, 3000);
   }
 
-  function saveBook() {
-    if (!validateForm()) return;
+  function saveBook(e) {
+    e.preventDefault(); // Prevent form submission
+    
+    if (!validateForm()) {
+      return false; // Stop processing if validation fails
+    }
+    
     const book = {
       id: idInput.value.trim() || generateUniqueId(),
       title: titleInput.value.trim(),
@@ -99,23 +121,42 @@ document.addEventListener('DOMContentLoaded', function () {
       cover: coverImage.src,
       available: true
     };
+    
     if (idInput.value.trim() && books.some(b => b.id === book.id)) {
-      return showFeedback(`Book with ID ${book.id} already exists!`, false);
+      showFeedback(`Book with ID ${book.id} already exists!`, false);
+      return false;
     }
+    
     books.push(book);
     localStorage.setItem('books', JSON.stringify(books));
     showFeedback(`Book "${book.title}" added successfully!`);
+    
     titleInput.value = '';
     authorInput.value = '';
     categoryInput.value = '';
     idInput.value = '';
     descriptionInput.value = '';
+    
     window.location.href = `/add_book/preview/${book.id}/`;
+    return false; // Prevent form submission
   }
 
-  addButton.addEventListener('click', saveBook);
+  // Add form submit handler for better validation control
+  if (addBookForm) {
+    addBookForm.addEventListener('submit', saveBook);
+  }
+  
+  // Keep the button click handler as a fallback
+  if (addButton) {
+    addButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      saveBook(e);
+    });
+  }
+  
   window.displayBooks = () => console.table(JSON.parse(localStorage.getItem('books')) || []);
 });
+
 
 //---------- Methods for the search and filter ----------//
 document.addEventListener("DOMContentLoaded", function () {
