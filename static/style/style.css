@@ -395,8 +395,12 @@ to {
 
 #category {
     margin: 0;
-    display: flex;
-    justify-content: right;
+    display: inline-flex;
+    max-width: 10rem;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .availability-wrapper {
@@ -462,6 +466,7 @@ to {
     line-height: 1.3;
     display: flex;
     flex-direction: column;
+    max-width: 20rem;
 }
 
 /*Change the color of the author*/
@@ -954,12 +959,18 @@ p, h1, h2, h3, h4, h5, h6 {
     margin: 0;
     font-size: 1em;
     text-align: left;
+    max-width: 7rem;
 }
 
 .book-header .left .author {
     margin: 2px 0;
     font-size: 0.8em;
     color: #ccc;
+    max-width: 7rem;
+}
+
+.book-header .right {
+    max-width: 6rem;
 }
 
 .book-overlay .status,

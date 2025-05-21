@@ -7,6 +7,13 @@ const MIN_DESCRIPTION_LENGTH = 20;
 const coverOverlay = document.querySelector('#cover-preview .edit-overlay');
 const fileInput = document.getElementById('cover-upload');
 const coverImage = document.querySelector('#cover-preview img');
+const availability = document.getElementById("availability");
+
+console.log('Element:', availability);
+
+let isBorrowed = availability.innerText.trim().toLowerCase() !== "available";
+
+updateAvailability();
 
 // Clicking on the overlay opens the hidden file input
 coverOverlay.addEventListener('click', () => {
@@ -269,8 +276,6 @@ async function saveChanges() {
 }
 
 
-
-
 // CSRF helper 
 function getCookie(name) {
     let cookieValue = null;
@@ -294,7 +299,7 @@ function getCookie(name) {
     if (!feedback) {
         feedback = document.createElement('div');
         feedback.id = 'feedback-message';
-        document.querySelector('.vertical-flex').appendChild(feedback);
+        document.querySelector('.main-panel').appendChild(feedback);
     }
     
     // Style based on success or failure
@@ -312,4 +317,10 @@ function getCookie(name) {
     }, 3000);
     
     feedback.style.display = 'block';
+}
+
+function updateAvailability() {
+    availability.textContent = isBorrowed ? "Borrowed" : "Available";
+    availability.classList.toggle('available-preview', !isBorrowed);
+    availability.classList.toggle('borrowed-preview', isBorrowed);
 }

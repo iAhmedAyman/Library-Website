@@ -9,12 +9,14 @@ document.addEventListener('DOMContentLoaded', function () {
   const MAX_TITLE_LENGTH = 50;
   const MAX_AUTHOR_LENGTH = 40;
   const MIN_DESCRIPTION_LENGTH = 20;
+  const MAX_DESCRIPTION_LENGTH = 100000;
 
   titleInput.setAttribute('maxlength', MAX_TITLE_LENGTH);
   authorInput.setAttribute('maxlength', MAX_AUTHOR_LENGTH);
   createCharCounter(titleInput, MAX_TITLE_LENGTH);
   createCharCounter(authorInput, MAX_AUTHOR_LENGTH);
-  createCharCounter(descriptionInput, null, MIN_DESCRIPTION_LENGTH);
+  createCharCounter(descriptionInput, MAX_DESCRIPTION_LENGTH, MIN_DESCRIPTION_LENGTH);
+  createCharCounter(categoryInput, MAX_TITLE_LENGTH);
 
   function createCharCounter(inputElement, maxLength, minLength = null) {
     const counterDiv = document.createElement('div');
