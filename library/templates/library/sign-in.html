@@ -35,23 +35,29 @@
             <!-- Login Button -->
             <button type="submit" class="btn">Login</button>
 
-            <!-- Error message display -->
-            <div id="form-error" style="color:red; font-size:14px; text-align:center; margin-top:10px;">
-                {% if error %}{{ error }}{% endif %}
-            </div>
+            <!-- Error message display  -->
+            {% if error %}
+            <script>
+                const serverError = "{{ error|escapejs }}";
+                if (serverError) {
+                    document.addEventListener('DOMContentLoaded', () => {
+                    showFormError(serverError);
+                    });
+                }
+            </script>
+            {% endif %}
 
             <!-- Forgot password -->
             <div class="forgot">
                 <a href="#">Forgot password?</a>
             </div>
 
-            <!-- Sign up link -->
+            <!-- Sign up link  -->
             <div class="register-link">
                 <p>Don't have an account? <a href="/sign-up/">Sign up</a></p>
             </div>
         </form>
     </div>
-
     <script src="{% static 'script/sign-in.js' %}"></script>
 </body>
 </html>
