@@ -1,7 +1,8 @@
 // Set max length constraints
-const MAX_TITLE_LENGTH = 50;
-const MAX_AUTHOR_LENGTH = 40;
+const MAX_TITLE_LENGTH = 40;
+const MAX_AUTHOR_LENGTH = 30;
 const MIN_DESCRIPTION_LENGTH = 20;
+const MAX_DESCRIPTION_LENGTH = 100000;
 
 // Cover
 const coverOverlay = document.querySelector('#cover-preview .edit-overlay');
@@ -101,7 +102,7 @@ const descriptionOverlay = document.querySelector('.description .edit-info .edit
 const descriptionElement = document.getElementById('description-preview');
 
 // Create description counter
-const descriptionCounter = createCharCounter(descriptionElement, null, MIN_DESCRIPTION_LENGTH);
+const descriptionCounter = createCharCounter(descriptionElement, MAX_DESCRIPTION_LENGTH, MIN_DESCRIPTION_LENGTH);
 descriptionCounter.update();
 
 descriptionOverlay.addEventListener('click', () => {
@@ -191,8 +192,8 @@ async function saveInput(input, originalElement, hasIcon = false) {
     const newValue = input.value.trim();
 
     // Validate input
-    if (originalElement.id === 'description-preview' && newValue.length < MIN_DESCRIPTION_LENGTH) {
-        showFeedback(`Description must be at least ${MIN_DESCRIPTION_LENGTH} characters.`, false);
+    if (originalElement.id === 'description-preview' && (newValue.length < MIN_DESCRIPTION_LENGTH || newValue.length > MAX_DESCRIPTION_LENGTH)) {
+        showFeedback(`Description must be at least ${MIN_DESCRIPTION_LENGTH} characters, and at most ${MAX_DESCRIPTION_LENGTH} characters.`, false);
         input.focus();
         return;
     }

@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const addButton = document.querySelector('.blue-button');
   const addBookForm = document.getElementById('add-book-form');
 
-  const MAX_TITLE_LENGTH = 50;
-  const MAX_AUTHOR_LENGTH = 40;
+  const MAX_TITLE_LENGTH = 40;
+  const MAX_AUTHOR_LENGTH = 30;
   const MIN_DESCRIPTION_LENGTH = 20;
   const MAX_DESCRIPTION_LENGTH = 100000;
 
@@ -298,7 +298,7 @@ function loadBooks(searchText = "", filterType = "", filterValue = "") {
                 <span class="category"><i class='bx bx-purchase-tag'></i>${book.category}</span>
               </div>
             </div>
-            <p class="description">Description: ${book.description.slice(0, 140)}${book.description.length > 140 ? "..." : ""}</p>
+            <p class="description">Description: ${book.description.slice(0, 100)}${book.description.length > 100 ? "..." : ""}</p>
           </a>`;
 
         card.innerHTML = cardHTML;
