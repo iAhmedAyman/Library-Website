@@ -26,7 +26,7 @@ document.getElementById('signup-form').addEventListener('submit', function(event
   }
 
   if (!isValidPassword(password)) {
-    showFieldError(passwordInput, 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.');
+    showFieldError(passwordInput, 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character(!@#$%^&*(),.?:|_).');
     hasError = true;
   }
 
@@ -74,7 +74,7 @@ function isValidPassword(password) {
   const hasUpper = /[A-Z]/.test(password);
   const hasLower = /[a-z]/.test(password);
   const hasNumber = /[0-9]/.test(password);
-  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  const hasSpecial = /[!@#$%^&*(),.?:|_]/.test(password);
 
   return password.length >= minLength && hasUpper && hasLower && hasNumber && hasSpecial;
 }
